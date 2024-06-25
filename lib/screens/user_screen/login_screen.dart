@@ -123,14 +123,19 @@ class _LoginScreenState extends State<LoginScreen> {
         log("user ${element.username} successfuly loged in");
         log("user ${element.password} successfuly loged in");
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>  BottomNavBar(userdetails: element,),
+          builder: (context) => BottomNavBar(
+            userdetails: element,
+          ),
         ));
         break;
-      } else if(admin == _usernameController.text && adminPass == _passwordController.text){
-          log("admin loged in");
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=> AdminScreen()), (route) => false);
-          break;
-      }else{
+      } else if (admin == _usernameController.text &&
+          adminPass == _passwordController.text) {
+        log("admin loged in");
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const AdminScreen()),
+            (route) => false);
+        break;
+      } else {
         log("inavlid user");
       }
     }

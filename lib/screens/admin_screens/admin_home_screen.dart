@@ -10,17 +10,18 @@ class AdminScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: const Color.fromARGB(180, 75, 75, 75),
       appBar: AppBar(
         toolbarHeight: 80,
         backgroundColor: Colors.transparent,
         title: const Center(
-          child: Text("ADMIN",style: TextStyle(color: Colors.white,fontSize: 30),),
+          child: Text(
+            "ADMIN",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+          ),
         ),
       ),
-
-
       body: Padding(
         padding: const EdgeInsets.all(40.0),
         child: Column(
@@ -28,16 +29,26 @@ class AdminScreen extends StatelessWidget {
           children: [
             Column(
               children: [
-                MainButton(buttonTitle: "RECIPES", buttonAction: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminRecipeScreen()));
-                }),
-                MainButton(buttonTitle: "USERS", buttonAction: (){}),
+                MainButton(
+                    buttonTitle: "RECIPES",
+                    buttonAction: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AdminRecipeScreen()));
+                    }),
+                MainButton(buttonTitle: "USERS", buttonAction: () {}),
               ],
             ),
-            MainButton(buttonTitle: "Back to Login", buttonAction: (){
-              log("back to login clicked");
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const LoginScreen()), (route) => false);
-            }),
+            MainButton(
+                buttonTitle: "Back to Login",
+                buttonAction: () {
+                  log("back to login clicked");
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                      (route) => false);
+                }),
           ],
         ),
       ),

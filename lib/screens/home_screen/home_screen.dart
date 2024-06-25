@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/userdb.dart';
@@ -7,10 +6,8 @@ import 'package:recipe_app/screens/home_screen/list_recipe_widget.dart';
 import 'package:recipe_app/textfields/textfield.dart';
 
 class Home extends StatefulWidget {
-  
   const Home({super.key, required this.userdetails});
   final User userdetails;
-
 
   @override
   State<Home> createState() => _HomeState();
@@ -18,7 +15,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final _searchRecipeController = TextEditingController();
-  
 
   @override
   void initState() {
@@ -30,7 +26,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      drawer:  HomeDrawer(userdetails: widget.userdetails),
+      drawer: HomeDrawer(userdetails: widget.userdetails),
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.only(left: 20),

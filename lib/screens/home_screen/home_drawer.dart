@@ -35,26 +35,36 @@ class HomeDrawer extends StatelessWidget {
               child: SidebarButtons(
                 text: "Profile",
                 action: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfileScreen(userdetails: userdetails,)));
-                  log("Profile Cilcked");},
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ProfileScreen(
+                            userdetails: userdetails,
+                          )));
+                  log("Profile Cilcked");
+                },
               )),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: SidebarButtons(
                 text: "Saved Recipes",
-                action: () {log("Saved Recipes Clicked");},
+                action: () {
+                  log("Saved Recipes Clicked");
+                },
               )),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: SidebarButtons(
                 text: "Settings",
-                action: () {log("Settings Cilcked");},
+                action: () {
+                  log("Settings Cilcked");
+                },
               )),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: SidebarButtons(
                 text: "About",
-                action: () {log("About Cilcked");},
+                action: () {
+                  log("About Cilcked");
+                },
               )),
         ],
       )),

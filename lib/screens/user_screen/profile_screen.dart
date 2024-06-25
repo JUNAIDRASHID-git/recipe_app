@@ -108,16 +108,19 @@ class ProfileScreen extends StatelessWidget {
                       text: 'Saved Recipes',
                       action: () {},
                     ),
-                    
                   ],
                 ),
               ),
-              
             ],
           ),
-          MainButton(buttonTitle: "LOGOUT", buttonAction: (){
-                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const LoginScreen()), (route) => false);
-                    }),
+          MainButton(
+              buttonTitle: "LOGOUT",
+              buttonAction: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                    (route) => false);
+              }),
         ],
       ),
     );
