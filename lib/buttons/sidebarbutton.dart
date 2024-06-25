@@ -10,19 +10,28 @@ class SidebarButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: action,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            text,
-            style: const TextStyle(color: Colors.white, fontSize: 25),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white),
+          borderRadius: const BorderRadius.all(Radius.circular(30))
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                text,
+                style: const TextStyle(color: Colors.white, fontSize: 25),
+              ),
+              const Icon(
+                Icons.arrow_forward,
+                color: Colors.white,
+                size: 30,
+              )
+            ],
           ),
-          const Icon(
-            Icons.arrow_forward,
-            color: Colors.white,
-            size: 30,
-          )
-        ],
+        ),
       ),
     );
   }

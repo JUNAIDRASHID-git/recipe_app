@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:recipe_app/bottombar/bottom_nav_bar.dart';
 import 'package:recipe_app/buttons/mainbutton.dart';
 import 'package:recipe_app/db/models/userdb.dart';
+import 'package:recipe_app/screens/admin_screens/admin_home_screen.dart';
 import 'package:recipe_app/screens/user_screen/signup_screen.dart';
 import 'package:recipe_app/textfields/textfield.dart';
 
@@ -114,6 +115,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() {
+    String admin = "admin";
+    String adminPass = "admin123";
     for (var element in userDB.values) {
       if (element.username == _usernameController.text &&
           element.password == _passwordController.text) {
@@ -123,8 +126,12 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) =>  BottomNavBar(userdetails: element,),
         ));
         break;
-      } else {
-        log("invalid user");
+      } else if(admin == _usernameController.text && adminPass == _passwordController.text){
+          log("admin loged in");
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=> AdminScreen()), (route) => false);
+          break;
+      }else{
+        log("inavlid user");
       }
     }
   }

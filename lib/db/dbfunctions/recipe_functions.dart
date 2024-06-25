@@ -21,3 +21,11 @@ void getAllRecipes()async{
   // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
   recipeNotifier.notifyListeners();
 }
+
+void deleteRecipe(Recipe value)async{
+    final recipeDB = await Hive.openBox<Recipe>("recipe_db");
+    recipeDB.delete(value);
+    recipeNotifier.value.remove(value);
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+    recipeNotifier.notifyListeners();
+}
