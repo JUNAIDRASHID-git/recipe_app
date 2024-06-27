@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class TextFieldMain extends StatelessWidget {
+class SearchTextField extends StatelessWidget {
   final Widget icon;
   final String prefixText;
   final bool obscuretext;
-  final TextEditingController controller;
-  const TextFieldMain(
+  final Function(String)? onChanged;
+   const SearchTextField(
       {super.key,
       required this.icon,
       required this.prefixText,
-      required this.obscuretext,
-      required this.controller});
+      required this.obscuretext,required this.onChanged, required TextEditingController controller});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       obscureText: obscuretext,
       decoration: InputDecoration(
         isDense: true,

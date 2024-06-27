@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:recipe_app/buttons/edit_delete_button.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
+import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_edit_screen.dart';
 
 class RecipeListAdmin extends StatefulWidget {
   const RecipeListAdmin({super.key});
@@ -11,6 +14,9 @@ class RecipeListAdmin extends StatefulWidget {
 }
 
 class _RecipeListAdminState extends State<RecipeListAdmin> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -19,6 +25,7 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
         return ListView.separated(
           itemBuilder: (context, index) {
             final data = recipeList[index];
+
             final vegcolor = data.veg != true
                 ? Colors.red
                 : const Color.fromARGB(255, 51, 118, 53);
@@ -42,16 +49,14 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                         Text(
                           data.title,
                           style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Poppins",
+                          ),
                         ),
                         SizedBox(
-                          width: 270,
-                          child: data.image.isNotEmpty
-                              ? Image.asset(data.image)
-                              : const Text("No image"),
-                        ),
+                            width: 270, child: Image.file(File(data.image))),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -63,13 +68,9 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    decoration: BoxDecoration(
-                                        color: data.veg == true
-                                            ? const Color.fromARGB(
-                                                255, 122, 255, 126)
-                                            : const Color.fromARGB(
-                                                255, 255, 212, 19),
-                                        borderRadius: const BorderRadius.all(
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
                                             Radius.circular(40))),
                                     child: Row(
                                       children: [
@@ -136,14 +137,23 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                               child: Text(
                                 data.description,
                                 style: const TextStyle(
-                                    color: Colors.white, fontSize: 15),
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontFamily: "Poppins",
+                                ),
                               ),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             DeleteEditButton(
-                                buttonAction: () {},
+                                buttonAction: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                               UpdateRecipeadmin(recipeData: data,)));
+                                },
                                 buttonTitle: "EDIT",
                                 color: const Color.fromARGB(255, 62, 62, 62),
                                 fontSize: 20),
@@ -176,7 +186,7 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                                                 children: [
                                                   TextButton(
                                                       onPressed: () {
-                                                        deleteRecipe(data);
+                                                        deleteRecipe(data.id);
                                                         Navigator.pop(context);
                                                       },
                                                       child: const Text("YES")),

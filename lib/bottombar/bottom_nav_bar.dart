@@ -1,9 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/db/models/userdb.dart';
-import 'package:recipe_app/screens/favorite_screen.dart';
+import 'package:recipe_app/screens/user_screen/favorite_screen.dart';
 import 'package:recipe_app/screens/home_screen/home_screen.dart';
-import 'package:recipe_app/user_recipe_add_screen.dart';
+import 'package:recipe_app/screens/user_screen/user_recipe_add_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key, required this.userdetails});

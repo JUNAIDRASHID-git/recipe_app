@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
@@ -58,7 +59,7 @@ class RecipeDetailScreen extends StatelessWidget {
           ),
           SizedBox(
             height: 250,
-            child: Image.asset(recipedetails.image),
+            child: Image.file(File(recipedetails.image)),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

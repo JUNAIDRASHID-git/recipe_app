@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_add_screen.dart';
@@ -25,21 +24,22 @@ class _AdminRecipeScreenState extends State<AdminRecipeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 75),
-        child: FloatingActionButton(
-          
-          onPressed: (){
-            log("add recipe pressed");
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>AddRecipeAdmin()));
-          },
-          backgroundColor: const Color.fromARGB(255, 86, 190, 72),
-        
-          shape: const CircleBorder(),
-          child: const Icon(Icons.add),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 75),
+          child: FloatingActionButton(
+            onPressed: () {
+              log("add recipe pressed");
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddRecipeAdmin()));
+            },
+            backgroundColor: const Color.fromARGB(255, 86, 190, 72),
+            shape: const CircleBorder(),
+            child: const Icon(Icons.add),
           ),
-      ),
+        ),
         backgroundColor: const Color.fromARGB(180, 75, 75, 75),
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white, size: 35),

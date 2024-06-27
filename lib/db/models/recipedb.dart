@@ -15,12 +15,12 @@ class Recipe {
   String ingrediants;
   @HiveField(5)
   String instruction;
-@HiveField(6)
+  @HiveField(6)
   bool veg;
   @HiveField(7)
   bool fav;
   @HiveField(8)
-  int id;
+  String id;
 
   Recipe(
       {required this.image,
@@ -31,6 +31,5 @@ class Recipe {
       required this.instruction,
       required this.id,
       required this.veg,
-      required this.fav
-      });
+      required this.fav});
 }

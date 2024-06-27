@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
@@ -56,12 +58,7 @@ class ListRecipe extends StatelessWidget {
                                 ))
                           ],
                         ),
-                        SizedBox(
-                          width: 270,
-                          child: data.image.isNotEmpty
-                              ? Image.asset(data.image)
-                              : const Text("No image"),
-                        ),
+                        SizedBox(width: 270, child: Image.file(File(data.image))),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -73,13 +70,9 @@ class ListRecipe extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    decoration: BoxDecoration(
-                                        color: data.veg == true
-                                            ? const Color.fromARGB(
-                                                255, 122, 255, 126)
-                                            : const Color.fromARGB(
-                                                255, 255, 212, 19),
-                                        borderRadius: const BorderRadius.all(
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
                                             Radius.circular(40))),
                                     child: Row(
                                       children: [

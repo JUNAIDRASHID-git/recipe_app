@@ -4,8 +4,9 @@ class TextFieldAddRecipe extends StatefulWidget {
   final TextEditingController controller;
   final String label;
   final Widget prefixIcon;
+  final TextInputType? keyboardType;
   const TextFieldAddRecipe(
-      {super.key, required this.controller, required this.label, required this.prefixIcon});
+      {super.key, required this.controller, required this.label, required this.prefixIcon, this.keyboardType});
 
   @override
   State<TextFieldAddRecipe> createState() => _TextFieldAddRecipeState();
@@ -15,6 +16,7 @@ class _TextFieldAddRecipeState extends State<TextFieldAddRecipe> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType:widget.keyboardType,
       decoration: InputDecoration(
         fillColor: Colors.grey,
         filled: true,

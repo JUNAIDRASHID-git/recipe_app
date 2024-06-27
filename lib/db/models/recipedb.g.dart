@@ -23,7 +23,7 @@ class RecipeAdapter extends TypeAdapter<Recipe> {
       description: fields[3] as String,
       ingrediants: fields[4] as String,
       instruction: fields[5] as String,
-      id: fields[8] as int,
+      id: fields[8] as String,
       veg: fields[6] as bool,
       fav: fields[7] as bool,
     );
