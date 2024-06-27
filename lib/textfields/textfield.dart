@@ -15,6 +15,7 @@ class TextFieldMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       obscureText: obscuretext,
       decoration: InputDecoration(
         isDense: true,

@@ -10,6 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDir = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
+  Hive.close();
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(UserAdapter().typeId)) {
     Hive.registerAdapter(UserAdapter());

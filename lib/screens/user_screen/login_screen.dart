@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:recipe_app/bottombar/bottom_nav_bar.dart';
 import 'package:recipe_app/buttons/mainbutton.dart';
-import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/admin_screens/admin_home_screen.dart';
 import 'package:recipe_app/screens/user_screen/signup_screen.dart';
@@ -24,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    getAllRecipes();
     userDB = Hive.box<User>("user_db");
   }
 
@@ -134,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
           adminPass == _passwordController.text) {
         log("admin loged in");
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) =>  const AdminScreen()),
+            MaterialPageRoute(builder: (context) => const AdminScreen()),
             (route) => false);
         break;
       } else {

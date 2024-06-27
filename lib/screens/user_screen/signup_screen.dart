@@ -118,6 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       username: _usernameController.text,
                       password: _passwordController.text,
                       id: DateTime.now().millisecondsSinceEpoch.toString());
+                      log("$_usernameController");
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const LoginScreen()));
                 },
