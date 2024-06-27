@@ -46,11 +46,12 @@ class _ListRecipeState extends State<ListRecipe> {
         return Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: TextField(
                 controller: _searchController,
                 decoration: const InputDecoration(
-                  fillColor: Colors.white,
+                  isDense: true,
+                  fillColor: Color.fromARGB(255, 231, 231, 231),
                   filled: true,
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(
@@ -129,6 +130,7 @@ class _ListRecipeState extends State<ListRecipe> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
+                                          height: 25,
                                           decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.all(

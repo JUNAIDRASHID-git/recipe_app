@@ -70,12 +70,11 @@ class RecipeDetailScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                          color: recipedetails.veg == true
-                              ? const Color.fromARGB(255, 122, 255, 126)
-                              : const Color.fromARGB(255, 255, 212, 19),
+                      height: 25,
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(40))),
+                              BorderRadius.all(Radius.circular(40))),
                       child: Row(
                         children: [
                           Padding(

@@ -5,6 +5,7 @@ import 'package:recipe_app/buttons/edit_delete_button.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_edit_screen.dart';
+import 'package:recipe_app/screens/home_screen/recipe_details_screen.dart';
 
 class RecipeListAdmin extends StatefulWidget {
   const RecipeListAdmin({super.key});
@@ -73,7 +74,13 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => RecipeDetailScreen(
+                            recipedetails: data,
+                          ),
+                        ));
+                      },
                       child: Container(
                         decoration: const BoxDecoration(
                             color: Color.fromARGB(255, 98, 98, 98),
@@ -111,6 +118,7 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
+                                          height: 25,
                                           decoration: const BoxDecoration(
                                               color: Colors.white,
                                               borderRadius: BorderRadius.all(

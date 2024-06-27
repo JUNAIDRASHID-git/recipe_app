@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:recipe_app/bottombar/bottom_nav_bar.dart';
 import 'package:recipe_app/buttons/mainbutton.dart';
@@ -158,6 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
             (route) => false);
         break;
       } else {
+        
         log("Invalid password");
         const snackBar = SnackBar(
           backgroundColor: Colors.red,
