@@ -53,8 +53,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         items: const <Widget>[
           Icon(Icons.home_filled, size: 30),
           Icon(Icons.favorite, size: 30),
-          Icon(Icons.notes, size: 30),
-          Icon(Icons.favorite, size: 30),
+          ImageIcon(AssetImage("assets/logos/menu.png"),size: 33,),
+          ImageIcon(AssetImage("assets/logos/ai.png"))
         ],
       ),
     );

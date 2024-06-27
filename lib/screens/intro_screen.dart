@@ -40,8 +40,8 @@ class IntroScreen extends StatelessWidget {
               buttonTitle: "START",
               buttonAction: () {
                 log("Start pressed");
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const LoginScreen()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const LoginScreen()));
               },
             )
           ],

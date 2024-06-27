@@ -53,18 +53,6 @@ class _AdminRecipeScreenState extends State<AdminRecipeScreen> {
             ),
           ),
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: TextFieldMain(
-                  icon: const Icon(Icons.search),
-                  prefixText: "Search Recipe",
-                  obscuretext: false,
-                  controller: _searchController),
-            ),
-            const Expanded(child: RecipeListAdmin()),
-          ],
-        ));
+        body: const RecipeListAdmin());
   }
 }

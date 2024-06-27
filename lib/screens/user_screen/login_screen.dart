@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:recipe_app/bottombar/bottom_nav_bar.dart';
 import 'package:recipe_app/buttons/mainbutton.dart';
@@ -19,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   late Box userDB;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -55,48 +57,66 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    " Login",
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFieldMain(
-                    icon: const Icon(Icons.person),
-                    prefixText: "UserName",
-                    obscuretext: false,
-                    controller: _usernameController,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFieldMain(
-                    icon: const Icon(Icons.lock),
-                    prefixText: "Password",
-                    obscuretext: true,
-                    controller: _passwordController,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      log("create account pressed");
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const SignupScreen()),
-                          (route) => false);
-                    },
-                    child: const Text(
-                      "  Create an Account",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      " Login",
+                      style: TextStyle(color: Colors.white, fontSize: 30),
                     ),
-                  )
-                ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFieldMain(
+                        icon: const Icon(Icons.person),
+                        prefixText: "UserName",
+                        obscuretext: false,
+                        controller: _usernameController,
+                        validator: (value) {
+                          final nameRegex = RegExp(r'^[a-zA-Z]{3,20}$');
+                          if (value == null || value.isEmpty) {
+                            return 'Please Enter The Name';
+                          } else if (!nameRegex.hasMatch(value)) {
+                            return "Name Must be a Charactor";
+                          } else if (value.length < 4) {
+                            return 'Please Enter Name Grater Than 4 Charator';
+                          }
+                          return null;
+                        }),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFieldMain(
+                        icon: const Icon(Icons.lock),
+                        prefixText: "Password",
+                        obscuretext: true,
+                        controller: _passwordController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please Enter The Password";
+                          }
+                          return null;
+                        }),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        log("create account pressed");
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const SignupScreen()),
+                            (route) => false);
+                      },
+                      child: const Text(
+                        "  Create an Account",
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             Center(
@@ -104,7 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 buttonTitle: "Login",
                 buttonAction: () {
                   log("Login pressed");
-                  login();
+                  if (_formKey.currentState!.validate()) {
+                    login();
+                  }
                 },
               ),
             ),
@@ -136,7 +158,13 @@ class _LoginScreenState extends State<LoginScreen> {
             (route) => false);
         break;
       } else {
-        log("inavlid user");
+        log("Invalid password");
+        const snackBar = SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("! Please Enter Correct userName And Password"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        break;
       }
     }
   }

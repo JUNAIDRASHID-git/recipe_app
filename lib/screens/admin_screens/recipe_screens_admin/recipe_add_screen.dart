@@ -107,6 +107,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                         height: 65,
                         width: 153,
                         child: TextFieldAddRecipe(
+                          maxLines: 1,
                           keyboardType: TextInputType.number,
                           controller: _timeController,
                           label: 'Time',
@@ -149,6 +150,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                     height: 10,
                   ),
                   TextFieldAddRecipe(
+                    maxLines: 1,
                     controller: _titleController,
                     label: 'Title',
                     prefixIcon: const Icon(Icons.edit),
@@ -157,6 +159,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                     height: 10,
                   ),
                   TextFieldAddRecipe(
+                    maxLines: 2,
                     controller: _descriptionController,
                     label: 'Description',
                     prefixIcon: const Icon(Icons.edit),
@@ -165,6 +168,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                     height: 10,
                   ),
                   TextFieldAddRecipe(
+                    maxLines: 5,
                     controller: _ingredianceController,
                     label: 'Ingrediance',
                     prefixIcon: const Icon(Icons.edit),
@@ -173,6 +177,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                     height: 10,
                   ),
                   TextFieldAddRecipe(
+                    maxLines: 5,
                     controller: _instructionController,
                     label: 'Instructions',
                     prefixIcon: const Icon(Icons.edit),
@@ -186,7 +191,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
             MainButton(
                 buttonTitle: "Save",
                 buttonAction: () {
-                  selectedItem == "veg" ? veg = true : veg = false;
+                  veg = selectedItem == "VEG";
                   final time = int.tryParse(_timeController.text) ?? 0;
 
                   var value = Recipe(

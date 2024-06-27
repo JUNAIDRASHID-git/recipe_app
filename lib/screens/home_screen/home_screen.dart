@@ -3,7 +3,6 @@ import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/home_screen/home_drawer.dart';
 import 'package:recipe_app/screens/home_screen/list_recipe_widget.dart';
-import 'package:recipe_app/textfields/textfield.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key, required this.userdetails});
@@ -14,8 +13,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final _searchRecipeController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -61,28 +58,7 @@ class _HomeState extends State<Home> {
         color: Colors.transparent,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: TextFieldMain(
-                  icon: const Icon(
-                    Icons.search,
-                    size: 25,
-                  ),
-                  prefixText: "Search Recipes",
-                  obscuretext: false,
-                  controller: _searchRecipeController),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Expanded(child: ListRecipe()),
-          ],
-        ),
+        child: const ListRecipe(),
       )),
     );
   }

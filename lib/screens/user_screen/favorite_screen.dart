@@ -13,7 +13,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return const Scaffold(
       backgroundColor: Color.fromARGB(180, 75, 75, 75),
       extendBody: true,
-      body: Text("hello"),
+      body: Center(
+        child: Text("Favorite screen",style: TextStyle(fontSize: 40,color: Colors.white),),
+      ),
     );
   }
 }

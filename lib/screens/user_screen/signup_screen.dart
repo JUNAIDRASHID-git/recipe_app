@@ -27,7 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(180, 75, 75, 75),
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -37,7 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 30,
+                    height: 50,
                   ),
                   Text(
                     "Create",
@@ -50,6 +50,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 ],
               ),
             ),
+            const SizedBox(height: 160,),
+
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: Form(
@@ -69,6 +71,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       prefixText: "Email",
                       obscuretext: false,
                       controller: _emailController,
+                      validator: (value) {
+                        if(value==null || value.isEmpty){
+                            return "Enter Your Email";
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(
                       height: 10,
@@ -78,6 +86,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       prefixText: "UserName",
                       obscuretext: false,
                       controller: _usernameController,
+                      validator: (value) {
+                        if(value==null || value.isEmpty){
+                            return "Please Enter UserName";
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(
                       height: 10,
@@ -87,6 +101,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       prefixText: "Password",
                       obscuretext: true,
                       controller: _passwordController,
+                      validator: (value) {
+                        if(value==null || value.isEmpty){
+                            return "Please Fill The Password";
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(
                       height: 20,
@@ -108,21 +128,24 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
             ),
-            Center(
-              child: MainButton(
-                buttonTitle: "Sign Up",
-                buttonAction: () {
-                  log("sign up pressed");
-                  addUser(
-                      email: _emailController.text,
-                      username: _usernameController.text,
-                      password: _passwordController.text,
-                      id: DateTime.now().millisecondsSinceEpoch.toString());
-                      log("$_usernameController");
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LoginScreen()));
-                },
-              ),
+
+            const SizedBox(height: 180,),
+
+            MainButton(
+              buttonTitle: "Sign Up",
+              buttonAction: () {
+                log("sign up pressed");
+               if(_formKey.currentState!.validate()){
+                 addUser(
+                    email: _emailController.text,
+                    username: _usernameController.text,
+                    password: _passwordController.text,
+                    id: DateTime.now().millisecondsSinceEpoch.toString());
+                log("$_usernameController");
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const LoginScreen()));
+               }
+              },
             ),
           ],
         ),

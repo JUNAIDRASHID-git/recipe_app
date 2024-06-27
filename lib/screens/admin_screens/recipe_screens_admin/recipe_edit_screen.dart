@@ -9,8 +9,7 @@ import 'package:recipe_app/textfields/addrecipe_textfield.dart';
 
 class UpdateRecipeadmin extends StatefulWidget {
   final Recipe recipeData;
-   const UpdateRecipeadmin({super.key, required this.recipeData});
-
+  const UpdateRecipeadmin({super.key, required this.recipeData});
 
   @override
   State<UpdateRecipeadmin> createState() => __UpdateRecipeAdminStateState();
@@ -18,7 +17,7 @@ class UpdateRecipeadmin extends StatefulWidget {
 
 class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
   final _timeController = TextEditingController();
-   TextEditingController _titleController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _ingredianceController = TextEditingController();
   TextEditingController _instructionController = TextEditingController();
@@ -32,9 +31,12 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
     super.initState();
     selectedImage = File(widget.recipeData.image);
     _titleController = TextEditingController(text: widget.recipeData.title);
-    _descriptionController = TextEditingController(text: widget.recipeData.description);
-    _ingredianceController = TextEditingController(text: widget.recipeData.ingrediants);
-    _instructionController = TextEditingController(text: widget.recipeData.instruction);
+    _descriptionController =
+        TextEditingController(text: widget.recipeData.description);
+    _ingredianceController =
+        TextEditingController(text: widget.recipeData.ingrediants);
+    _instructionController =
+        TextEditingController(text: widget.recipeData.instruction);
   }
 
   @override
@@ -108,6 +110,7 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                         height: 65,
                         width: 153,
                         child: TextFieldAddRecipe(
+                          maxLines: 1,
                           keyboardType: TextInputType.number,
                           controller: _timeController,
                           label: 'Time',
@@ -150,6 +153,7 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                     height: 10,
                   ),
                   TextFieldAddRecipe(
+                    maxLines: 1,
                     controller: _titleController,
                     label: 'Title',
                     prefixIcon: const Icon(Icons.edit),
@@ -158,6 +162,7 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                     height: 10,
                   ),
                   TextFieldAddRecipe(
+                    maxLines: 2,
                     controller: _descriptionController,
                     label: 'Description',
                     prefixIcon: const Icon(Icons.edit),
@@ -166,6 +171,7 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                     height: 10,
                   ),
                   TextFieldAddRecipe(
+                    maxLines: 5,
                     controller: _ingredianceController,
                     label: 'Ingrediance',
                     prefixIcon: const Icon(Icons.edit),
@@ -174,6 +180,7 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                     height: 10,
                   ),
                   TextFieldAddRecipe(
+                    maxLines: 5,
                     controller: _instructionController,
                     label: 'Instructions',
                     prefixIcon: const Icon(Icons.edit),
@@ -187,7 +194,7 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
             MainButton(
                 buttonTitle: "Update",
                 buttonAction: () {
-                  selectedItem == "veg" ? veg = true : veg = false;
+                  veg = selectedItem == "VEG";
 
                   final time = int.tryParse(_timeController.text) ?? 0;
 
