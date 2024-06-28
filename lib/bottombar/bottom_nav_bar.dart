@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/db/models/userdb.dart';
+import 'package:recipe_app/screens/home_screen/ai_screen.dart';
 import 'package:recipe_app/screens/user_screen/favorite_screen.dart';
 import 'package:recipe_app/screens/home_screen/home_screen.dart';
 import 'package:recipe_app/screens/user_screen/user_recipe_add_screen.dart';
@@ -28,7 +29,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
        Home(userdetails: widget.userdetails,),
       const FavoriteScreen(),
       const UserRecipeAddScreen(),
-      const UserRecipeAddScreen(),
+      const AIScreen(),
     ];
 
     return Scaffold(

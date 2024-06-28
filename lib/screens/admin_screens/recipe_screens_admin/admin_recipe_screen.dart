@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_add_screen.dart';
 import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_list_admin.dart';
-import 'package:recipe_app/textfields/textfield.dart';
 
 class AdminRecipeScreen extends StatefulWidget {
   const AdminRecipeScreen({super.key});
@@ -13,7 +12,6 @@ class AdminRecipeScreen extends StatefulWidget {
 }
 
 class _AdminRecipeScreenState extends State<AdminRecipeScreen> {
-  final _searchController = TextEditingController();
 
   @override
   void initState() {
