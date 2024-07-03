@@ -4,6 +4,7 @@ import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/home_screen/recipe_details_screen.dart';
+import 'package:recipe_app/widgets/buttons/edit_delete_button.dart';
 import 'package:recipe_app/widgets/containers/image_widget_container.dart';
 import 'package:recipe_app/widgets/containers/time_widget_container.dart';
 import 'package:recipe_app/widgets/containers/veg_widget_container.dart';
@@ -39,8 +40,7 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
       ),
       body: ValueListenableBuilder(
         valueListenable: userRecipeNotifier,
-        builder:
-            (BuildContext context, List<Recipe> userRecipeList, Widget? child) {
+        builder:(BuildContext context, List<Recipe> userRecipeList, Widget? child) {
           return userRecipeList.isEmpty
               ? const Center(
                   child: Text(
@@ -62,7 +62,8 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => RecipeDetailScreen(recipedetails: data),
+                                  builder: (context) =>
+                                      RecipeDetailScreen(recipedetails: data),
                                 ));
                               },
                               child: Container(
@@ -78,7 +79,8 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           RecipeTileWidget(data: data),
                                           IconButton(
@@ -101,12 +103,16 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                         data: data,
                                       ),
                                       Column(
-                                        crossAxisAlignment:CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
                                             child: Row(
-                                              mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 VegWidgetContainer(data: data),
                                                 TimeWidgetContainer(data: data),
@@ -116,7 +122,20 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8, vertical: 5),
-                                            child: RecipeDescriptionWidget(data: data),
+                                            child: RecipeDescriptionWidget(
+                                                data: data),
+                                          ),
+                                          DeleteEditButton(
+                                            buttonAction: () {
+                                              setState(() {
+                                                deleteUserRecipe(
+                                                  widget.userdetails.id, data);
+                                              });
+                                            },
+                                            buttonTitle: 'DELETE',
+                                            color: const Color.fromARGB(
+                                                255, 151, 36, 36),
+                                            fontSize: 20,
                                           ),
                                           const SizedBox(
                                             height: 10,

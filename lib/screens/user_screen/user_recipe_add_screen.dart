@@ -172,8 +172,9 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                 buttonTitle: "Save to Draft",
                 buttonAction: () {
                   final time = int.tryParse(_timeController.text) ?? 0;
-                  final List<Recipe> recipeValue = [];
-                  final recipe = Recipe(
+                  List<Recipe> recipeList = List.from(widget.userdetails.userRecipe as Iterable);
+                  
+                  recipeList.add( Recipe(
                       image: selectedImage!.path,
                       title: _titleController.text,
                       time: time,
@@ -182,15 +183,15 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                       instruction: _instructionController.text,
                       id: DateTime.now().millisecondsSinceEpoch.toString(),
                       veg: veg,
-                      fav: false);
-                  recipeValue.add(recipe);
+                      fav: false));
+                  
 
                   final userValue = User(
                       email: widget.userdetails.email,
                       username: widget.userdetails.username,
                       password: widget.userdetails.password,
                       id: widget.userdetails.id,
-                      userRecipe: recipeValue);
+                      userRecipe: recipeList);
 
                   addUserRecipe(id: widget.userdetails.id, value: userValue);
                   log("${userValue.userRecipe}");

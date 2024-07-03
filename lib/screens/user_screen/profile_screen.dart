@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
 import 'package:recipe_app/screens/user_screen/saved_recipes_screeen.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/widgets/buttons/sidebarbutton.dart';
@@ -6,10 +7,26 @@ import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/user_screen/login_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.userdetails});
 
   final User userdetails;
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      getUser(id: widget.userdetails.id);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +79,12 @@ class ProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              userdetails.username.toUpperCase(),
+                              widget.userdetails.username.toUpperCase(),
                               style: const TextStyle(
                                   fontSize: 30, color: Colors.white),
                             ),
                             Text(
-                              userdetails.email,
+                              widget.userdetails.email,
                               style: const TextStyle(
                                   fontSize: 15, color: Colors.white),
                             )
@@ -92,7 +109,7 @@ class ProfileScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => UserSavedRecipes(
-                                      userdetails: userdetails,
+                                      userdetails: widget.userdetails,
                                     )));
                       },
                     ),

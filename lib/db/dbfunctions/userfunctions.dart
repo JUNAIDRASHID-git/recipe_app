@@ -37,10 +37,10 @@ void getUser({required id}) async {
   user!.userRecipe?.forEach(
     (element) {
       userRecipeNotifier.value.add(element);
-      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-      userRecipeNotifier.notifyListeners;
     },
   );
+  // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+  userRecipeNotifier.notifyListeners;
 }
 
 void getAllUSers() async {
@@ -49,4 +49,14 @@ void getAllUSers() async {
     log(element.username);
     log(element.password);
   }
+}
+
+void deleteUserRecipe(String id, Recipe ids) async {
+  final recipeDB = await Hive.openBox<User>("user_db");
+  final user = recipeDB.get(id);
+  final userRecipe = user!.userRecipe;
+  userRecipe?.remove(ids);
+  userRecipeNotifier.value.remove(ids);
+  // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+  userRecipeNotifier.notifyListeners;
 }
