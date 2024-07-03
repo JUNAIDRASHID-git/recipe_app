@@ -5,9 +5,13 @@ class TextFieldAddRecipe extends StatefulWidget {
   final String label;
   final Widget prefixIcon;
   final TextInputType? keyboardType;
-  final int maxLines;
   const TextFieldAddRecipe(
-      {super.key, required this.controller, required this.label, required this.prefixIcon, this.keyboardType, required this.maxLines});
+      {super.key,
+      required this.controller,
+      required this.label,
+      required this.prefixIcon,
+      this.keyboardType,
+      });
 
   @override
   State<TextFieldAddRecipe> createState() => _TextFieldAddRecipeState();
@@ -16,11 +20,11 @@ class TextFieldAddRecipe extends StatefulWidget {
 class _TextFieldAddRecipeState extends State<TextFieldAddRecipe> {
   @override
   Widget build(BuildContext context) {
-    
     return TextFormField(
-      style: const TextStyle(color: Colors.white,fontSize: 20),
-      maxLines: widget.maxLines,
-      keyboardType:widget.keyboardType,
+      minLines: 1,
+      style: const TextStyle(color: Colors.white, fontSize: 20),
+      maxLines: 100,
+      keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         fillColor: Colors.grey,
         filled: true,
@@ -29,7 +33,7 @@ class _TextFieldAddRecipeState extends State<TextFieldAddRecipe> {
         label: Text(widget.label),
         labelStyle: const TextStyle(
             color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
-            prefixIcon: widget.prefixIcon,
+        prefixIcon: widget.prefixIcon,
       ),
       controller: widget.controller,
     );

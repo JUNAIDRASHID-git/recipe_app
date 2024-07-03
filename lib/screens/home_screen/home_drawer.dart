@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:recipe_app/buttons/sidebarbutton.dart';
+import 'package:recipe_app/widgets/buttons/sidebarbutton.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/user_screen/profile_screen.dart';
 

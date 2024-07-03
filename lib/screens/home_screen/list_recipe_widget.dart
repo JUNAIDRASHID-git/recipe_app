@@ -1,9 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/screens/home_screen/recipe_details_screen.dart';
+import 'package:recipe_app/widgets/containers/image_widget_container.dart';
+import 'package:recipe_app/widgets/containers/time_widget_container.dart';
+import 'package:recipe_app/widgets/containers/veg_widget_container.dart';
+import 'package:recipe_app/widgets/text_widgets/recipe_description_widget.dart';
+import 'package:recipe_app/widgets/text_widgets/recipe_title_widget.dart';
 
 class ListRecipe extends StatefulWidget {
   const ListRecipe({super.key});
@@ -38,11 +42,7 @@ class _ListRecipeState extends State<ListRecipe> {
     return ValueListenableBuilder(
       valueListenable: recipeNotifier,
       builder: (BuildContext context, List<Recipe> recipeList, Widget? child) {
-        filteredRecipes =
-            filteredRecipes.isEmpty && _searchController.text.isEmpty
-                ? recipeList
-                : filteredRecipes;
-
+        filteredRecipes = filteredRecipes.isEmpty && _searchController.text.isEmpty ? recipeList: filteredRecipes;
         return Column(
           children: [
             Padding(
@@ -67,23 +67,18 @@ class _ListRecipeState extends State<ListRecipe> {
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   final data = filteredRecipes[index];
-                  final vegcolor = data.veg != true
-                      ? Colors.red
-                      : const Color.fromARGB(255, 51, 118, 53);
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => RecipeDetailScreen(
-                            recipedetails: data,
-                          ),
+                          builder: (context) => RecipeDetailScreen(recipedetails: data),
                         ));
                       },
                       child: Container(
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 98, 98, 98),
-                          borderRadius: BorderRadius.all(Radius.circular(40)),
+                        decoration:  BoxDecoration(
+                          color: recipeContainerColor,
+                          borderRadius: const BorderRadius.all(Radius.circular(40)),
                         ),
                         width: 80,
                         child: Padding(
@@ -91,140 +86,36 @@ class _ListRecipeState extends State<ListRecipe> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    data.title,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  RecipeTileWidget(data: data),
                                   IconButton(
                                     onPressed: () {},
                                     icon: Icon(
                                       Icons.star_rounded,
                                       size: 55,
-                                      color: data.fav == true
-                                          ? Colors.yellow
-                                          : Colors.white,
+                                      color: data.fav == true ? Colors.yellow : Colors.white,
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                width: 270,
-                                child: Image.file(File(data.image)),
-                              ),
+                              ImageWidgetContainer(data: data),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                    ),
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                          height: 25,
-                                          decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(40),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  left: 5,
-                                                  right: 5,
-                                                ),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color: vegcolor,
-                                                      width: 1.5,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                  ),
-                                                  height: 15,
-                                                  width: 15,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                      2.0,
-                                                    ),
-                                                    child: Center(
-                                                      child: CircleAvatar(
-                                                        backgroundColor:
-                                                            vegcolor,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              data.veg == true
-                                                  ? const Text(
-                                                      "Veg  ",
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    )
-                                                  : const Text(
-                                                      "Non Veg  ",
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: data.time <= 20
-                                                ? const Color.fromARGB(
-                                                    255, 122, 255, 126)
-                                                : const Color.fromARGB(
-                                                    255, 255, 212, 19),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(40),
-                                            ),
-                                          ),
-                                          width: 70,
-                                          child: Row(
-                                            children: [
-                                              const Icon(
-                                                Icons.access_time_filled_sharp,
-                                              ),
-                                              Text("${data.time}min"),
-                                            ],
-                                          ),
-                                        ),
+                                        VegWidgetContainer(data: data),
+                                        TimeWidgetContainer(data: data)
                                       ],
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 5,
-                                    ),
-                                    child: Text(
-                                      data.description,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                      ),
-                                    ),
+                                    padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 5),
+                                    child: RecipeDescriptionWidget(data: data)
                                   ),
                                   const SizedBox(
                                     height: 10,

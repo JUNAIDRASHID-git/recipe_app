@@ -1,9 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/buttons/mainbutton.dart';
+import 'package:recipe_app/widgets/buttons/mainbutton.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
 import 'package:recipe_app/screens/user_screen/login_screen.dart';
-import 'package:recipe_app/textfields/textfield.dart';
+import 'package:recipe_app/widgets/textfields/textfield.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -26,7 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(180, 75, 75, 75),
+      backgroundColor: mainbgcolor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,6 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       obscuretext: false,
                       controller: _emailController,
                       validator: (value) {
+                        
                         if(value==null || value.isEmpty){
                             return "Enter Your Email";
                         }
@@ -134,17 +136,17 @@ class _SignupScreenState extends State<SignupScreen> {
             MainButton(
               buttonTitle: "Sign Up",
               buttonAction: () {
-                log("sign up pressed");
+                
                if(_formKey.currentState!.validate()){
                  addUser(
                     email: _emailController.text,
                     username: _usernameController.text,
                     password: _passwordController.text,
                     id: DateTime.now().millisecondsSinceEpoch.toString());
-                log("$_usernameController");
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const LoginScreen()));
                }
+               log("sign up pressed");
               },
             ),
           ],

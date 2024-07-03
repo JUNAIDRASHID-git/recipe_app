@@ -2,10 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:recipe_app/buttons/mainbutton.dart';
+import 'package:recipe_app/widgets/buttons/mainbutton.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
-import 'package:recipe_app/textfields/addrecipe_textfield.dart';
+import 'package:recipe_app/widgets/textfields/addrecipe_textfield.dart';
+import 'package:recipe_app/widgets/containers/add_image_container.dart';
 
 class AddRecipeAdmin extends StatefulWidget {
   const AddRecipeAdmin({super.key});
@@ -22,6 +24,9 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
   final _instructionController = TextEditingController();
   bool veg = true;
   File? selectedImage;
+  Widget sizedBox = const SizedBox(
+    height: 10,
+  );
 
   List<String> isveg = ["VEG", "NON-VEG"];
   String selectedItem = "VEG";
@@ -39,7 +44,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(180, 75, 75, 75),
+      backgroundColor: mainbgcolor,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white, size: 35),
         backgroundColor: Colors.transparent,
@@ -56,28 +61,8 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
         child: Column(
           children: [
             Stack(alignment: Alignment.bottomRight, children: [
-              Container(
-                decoration: const BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.all(Radius.circular(30))),
-                height: 200,
-                width: 370,
-                child: selectedImage != null
-                    ? ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(30)),
-                        child: Image(
-                            fit: BoxFit.fill, image: FileImage(selectedImage!)),
-                      )
-                    : const Center(
-                        child: Text(
-                          "ADD IMAGE",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
+              AddImageContainer(
+                selectedImage: selectedImage,
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -107,7 +92,6 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                         height: 65,
                         width: 153,
                         child: TextFieldAddRecipe(
-                          maxLines: 1,
                           keyboardType: TextInputType.number,
                           controller: _timeController,
                           label: 'Time',
@@ -146,38 +130,26 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  sizedBox,
                   TextFieldAddRecipe(
-                    maxLines: 1,
                     controller: _titleController,
                     label: 'Title',
                     prefixIcon: const Icon(Icons.edit),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  sizedBox,
                   TextFieldAddRecipe(
-                    maxLines: 2,
                     controller: _descriptionController,
                     label: 'Description',
                     prefixIcon: const Icon(Icons.edit),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  sizedBox,
                   TextFieldAddRecipe(
-                    maxLines: 5,
                     controller: _ingredianceController,
                     label: 'Ingrediance',
                     prefixIcon: const Icon(Icons.edit),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  sizedBox,
                   TextFieldAddRecipe(
-                    maxLines: 5,
                     controller: _instructionController,
                     label: 'Instructions',
                     prefixIcon: const Icon(Icons.edit),

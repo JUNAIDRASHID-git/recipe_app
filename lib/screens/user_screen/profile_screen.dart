@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/buttons/mainbutton.dart';
-import 'package:recipe_app/buttons/sidebarbutton.dart';
+import 'package:recipe_app/screens/user_screen/saved_recipes_screeen.dart';
+import 'package:recipe_app/widgets/buttons/mainbutton.dart';
+import 'package:recipe_app/widgets/buttons/sidebarbutton.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/user_screen/login_screen.dart';
 
@@ -12,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(180, 75, 75, 75),
+      backgroundColor: mainbgcolor,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white, size: 35),
         backgroundColor: Colors.transparent,
@@ -81,32 +83,18 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(
-                      height: 20,
-                    ),
-                    SidebarButtons(
-                      text: 'My Orders',
-                      action: () {},
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    SidebarButtons(
-                      text: 'Shipping Address',
-                      action: () {},
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    SidebarButtons(
-                      text: 'Payment Methords',
-                      action: () {},
-                    ),
-                    const SizedBox(
                       height: 15,
                     ),
                     SidebarButtons(
                       text: 'Saved Recipes',
-                      action: () {},
+                      action: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserSavedRecipes(
+                                      userdetails: userdetails,
+                                    )));
+                      },
                     ),
                   ],
                 ),

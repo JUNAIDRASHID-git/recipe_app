@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/home_screen/ai_screen.dart';
 import 'package:recipe_app/screens/user_screen/favorite_screen.dart';
@@ -15,10 +16,10 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-
   @override
   void initState() {
     super.initState();
+    getUser(id: widget.userdetails.id);
   }
 
   @override
@@ -26,9 +27,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
     final ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
 
     final List<Widget> children = [
-       Home(userdetails: widget.userdetails,),
+      Home(userdetails: widget.userdetails,),
       const FavoriteScreen(),
-      const UserRecipeAddScreen(),
+      UserRecipeAddScreen(userdetails: widget.userdetails,),
       const AIScreen(),
     ];
 
@@ -54,7 +55,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
         items: const <Widget>[
           Icon(Icons.home_filled, size: 30),
           Icon(Icons.favorite, size: 30),
-          ImageIcon(AssetImage("assets/logos/menu.png"),size: 33,),
+          ImageIcon(
+            AssetImage("assets/logos/menu.png"),
+            size: 33,
+          ),
           ImageIcon(AssetImage("assets/logos/ai.png"))
         ],
       ),
