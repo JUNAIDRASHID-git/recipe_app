@@ -2,23 +2,31 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/colors/main_bg_colors.dart';
-import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
+import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
+import 'package:recipe_app/db/models/userdb.dart';
+import 'package:recipe_app/screens/user_screen/saved_recipes_screeen.dart';
+import 'package:recipe_app/widgets/buttons/mainbutton.dart';
+import 'package:recipe_app/widgets/containers/add_image_container.dart';
 import 'package:recipe_app/widgets/formfields/recipe_form.dart';
 import 'package:recipe_app/widgets/textfields/addrecipe_textfield.dart';
-import 'package:recipe_app/widgets/containers/add_image_container.dart';
 
-class UpdateRecipeadmin extends StatefulWidget {
+class UserRecipeEditScreen extends StatefulWidget {
   final Recipe recipeData;
-  const UpdateRecipeadmin({super.key, required this.recipeData});
+  final User userData;
+  final int index;
+  const UserRecipeEditScreen(
+      {super.key,
+      required this.recipeData,
+      required this.userData,
+      required this.index});
 
   @override
-  State<UpdateRecipeadmin> createState() => __UpdateRecipeAdminStateState();
+  State<UserRecipeEditScreen> createState() => _UserEditScreenState();
 }
 
-class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
+class _UserEditScreenState extends State<UserRecipeEditScreen> {
   final _timeController = TextEditingController();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -49,11 +57,11 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
         iconTheme: const IconThemeData(color: Colors.white, size: 35),
         backgroundColor: Colors.transparent,
         toolbarHeight: 80,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 55),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 55),
           child: Text(
             "Add Recipes",
-            style: TextStyle(color: Colors.white, fontSize: 30),
+            style: TextStyle(color: fontColor, fontSize: 30),
           ),
         ),
       ),
@@ -108,8 +116,8 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: DropdownButton<String>(
-                            style: const TextStyle(
-                                color: Colors.white,
+                            style: TextStyle(
+                                color: fontColor,
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold),
                             dropdownColor: Colors.grey,
@@ -137,7 +145,7 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                       titleController: _titleController,
                       descriptionController: _descriptionController,
                       ingredianceController: _ingredianceController,
-                      instructionController: _instructionController),
+                      instructionController: _instructionController)
                 ],
               ),
             ),
@@ -151,19 +159,39 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
 
                   final time = int.tryParse(_timeController.text) ?? 0;
 
-                  var value = Recipe(
+                  List<Recipe> recipeList = [
+                    ...widget.userData.userRecipe ?? []
+                  ];
+                  recipeList.removeAt(widget.index);
+
+                  var recipe = Recipe(
                       image: selectedImage!.path,
                       title: _titleController.text,
                       time: time,
                       description: _descriptionController.text,
                       ingrediants: _ingredianceController.text,
                       instruction: _instructionController.text,
+                      id: DateTime.now().millisecondsSinceEpoch.toString(),
                       veg: veg,
-                      id: widget.recipeData.id,
                       fav: false);
 
-                  updateRecipe(value);
-                  Navigator.pop(context);
+                  recipeList.add(recipe);
+
+                  final userValue = User(
+                      email: widget.userData.email,
+                      username: widget.userData.username,
+                      password: widget.userData.password,
+                      id: widget.userData.id,
+                      userRecipe: recipeList);
+
+                  addUserRecipe(id: widget.userData.id, value: userValue);
+                  // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                  userRecipeNotifier.notifyListeners;
+
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserSavedRecipes(userdetails: widget.userData)));
                 })
           ],
         ),

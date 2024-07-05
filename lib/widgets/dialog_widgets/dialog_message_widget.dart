@@ -1,40 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/db/models/recipedb.dart';
 
-class DialogMessageWidget extends StatelessWidget {
-  const DialogMessageWidget({super.key, required this.data, required this.yesAction, required this.messageText});
-  final Recipe data;
-  final void Function() yesAction;
+class DialogMessageWidget extends StatefulWidget {
+  const DialogMessageWidget(
+      {super.key, required this.yesAction, required this.messageText});
+
+  final void Function()? yesAction;
   final String messageText;
 
   @override
+  State<DialogMessageWidget> createState() => _DialogMessageWidgetState();
+}
+
+class _DialogMessageWidgetState extends State<DialogMessageWidget> {
+  @override
   Widget build(BuildContext context) {
     return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
       child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
         ),
-        height: 100,
-        width: 100,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(messageText),
+            Text(widget.messageText),
+            const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
-                    onPressed: yesAction,
-                    child: const Text("YES")),
+                  onPressed: widget.yesAction,
+                  child: const Text("YES"),
+                ),
                 TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text("NO")),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("NO"),
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

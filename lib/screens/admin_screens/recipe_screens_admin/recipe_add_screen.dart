@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
+import 'package:recipe_app/widgets/formfields/recipe_form.dart';
 import 'package:recipe_app/widgets/textfields/addrecipe_textfield.dart';
 import 'package:recipe_app/widgets/containers/add_image_container.dart';
 
@@ -44,7 +44,6 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mainbgcolor,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white, size: 35),
         backgroundColor: Colors.transparent,
@@ -67,7 +66,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: FloatingActionButton(
-                    backgroundColor: const Color.fromARGB(255, 81, 81, 81),
+                    backgroundColor: const Color.fromARGB(255, 70, 70, 70),
                     child: const Icon(
                       Icons.add_a_photo_outlined,
                       color: Colors.white,
@@ -131,29 +130,11 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                     ],
                   ),
                   sizedBox,
-                  TextFieldAddRecipe(
-                    controller: _titleController,
-                    label: 'Title',
-                    prefixIcon: const Icon(Icons.edit),
-                  ),
-                  sizedBox,
-                  TextFieldAddRecipe(
-                    controller: _descriptionController,
-                    label: 'Description',
-                    prefixIcon: const Icon(Icons.edit),
-                  ),
-                  sizedBox,
-                  TextFieldAddRecipe(
-                    controller: _ingredianceController,
-                    label: 'Ingrediance',
-                    prefixIcon: const Icon(Icons.edit),
-                  ),
-                  sizedBox,
-                  TextFieldAddRecipe(
-                    controller: _instructionController,
-                    label: 'Instructions',
-                    prefixIcon: const Icon(Icons.edit),
-                  ),
+                  RecipeFormWidget(
+                      titleController: _titleController,
+                      descriptionController: _descriptionController,
+                      ingredianceController: _ingredianceController,
+                      instructionController: _instructionController)
                 ],
               ),
             ),

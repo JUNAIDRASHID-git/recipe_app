@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
+import 'package:recipe_app/widgets/containers/time_widget_container.dart';
+import 'package:recipe_app/widgets/containers/veg_widget_container.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
   final Recipe recipedetails;
@@ -16,10 +18,6 @@ class RecipeDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     getAllRecipes();
-    final vegcolor = recipedetails.veg != true
-        ? Colors.red
-        : const Color.fromARGB(255, 51, 118, 53);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -28,7 +26,7 @@ class RecipeDetailScreen extends StatelessWidget {
         title: Center(
             child: Text(
           recipedetails.title,
-          style: const TextStyle(color: Colors.white, fontSize: 40),
+          style:  TextStyle(color: fontColor, fontSize: 40),
         )),
         actions: [
           IconButton(
@@ -38,7 +36,6 @@ class RecipeDetailScreen extends StatelessWidget {
               icon: const Icon(Icons.share))
         ],
       ),
-      backgroundColor: const Color.fromARGB(180, 75, 75, 75),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: ListView(children: [
@@ -69,58 +66,8 @@ class RecipeDetailScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      height: 25,
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(40))),
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.only(left: 5, right: 5),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: vegcolor, width: 1.5),
-                                    borderRadius: BorderRadius.circular(5)),
-                                height: 15,
-                                width: 15,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Center(
-                                    child: CircleAvatar(
-                                      backgroundColor: vegcolor,
-                                    ),
-                                  ),
-                                ),
-                              )),
-                          recipedetails.veg == true
-                              ? const Text(
-                                  "Veg  ",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )
-                              : const Text("Non Veg  ",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: recipedetails.time <= 20
-                              ? const Color.fromARGB(255, 122, 255, 126)
-                              : const Color.fromARGB(255, 255, 212, 19),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(40))),
-                      width: 70,
-                      child: Row(
-                        children: [
-                          const Icon(Icons.access_time_filled_sharp),
-                          Text("${recipedetails.time}min"),
-                        ],
-                      ),
-                    ),
+                    VegWidgetContainer(data: recipedetails),
+                    TimeWidgetContainer(data: recipedetails)
                   ],
                 ),
               ),
@@ -134,29 +81,29 @@ class RecipeDetailScreen extends StatelessWidget {
                   children: [
                     Text(
                       recipedetails.description,
-                      style: const TextStyle(color: Colors.white, fontSize: 17),
+                      style:  TextStyle(color: fontColor, fontSize: 17),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const Text(
+                     Text(
                       "Incrediance :",
-                      style: TextStyle(color: Colors.white, fontSize: 25),
+                      style: TextStyle(color: fontColor, fontSize: 25),
                     ),
                     Text(
                       recipedetails.ingrediants,
-                      style: const TextStyle(color: Colors.white),
+                      style:  TextStyle(color: fontColor),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const Text(
+                     Text(
                       "Instructions :",
-                      style: TextStyle(color: Colors.white, fontSize: 25),
+                      style: TextStyle(color: fontColor, fontSize: 25),
                     ),
                     Text(
                       recipedetails.instruction,
-                      style: const TextStyle(color: Colors.white),
+                      style:  TextStyle(color: fontColor),
                     )
                   ],
                 ),

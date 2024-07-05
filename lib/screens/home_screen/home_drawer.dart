@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/widgets/buttons/sidebarbutton.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/user_screen/profile_screen.dart';
@@ -16,11 +17,11 @@ class HomeDrawer extends StatelessWidget {
       child: SafeArea(
           child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(right: 5, bottom: 20, top: 10),
+           Padding(
+            padding: const EdgeInsets.only(right: 5, bottom: 20, top: 10),
             child: Text(
               "Menu",
-              style: TextStyle(color: Colors.white, fontSize: 30),
+              style: TextStyle(color: fontColor, fontSize: 30),
             ),
           ),
           const Padding(

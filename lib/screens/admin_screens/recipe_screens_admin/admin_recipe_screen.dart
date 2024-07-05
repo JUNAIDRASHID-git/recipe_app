@@ -38,7 +38,6 @@ class _AdminRecipeScreenState extends State<AdminRecipeScreen> {
             child: const Icon(Icons.add),
           ),
         ),
-        backgroundColor: const Color.fromARGB(180, 75, 75, 75),
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white, size: 35),
           toolbarHeight: 80,

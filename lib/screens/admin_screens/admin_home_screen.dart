@@ -11,7 +11,6 @@ class AdminScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(180, 75, 75, 75),
       appBar: AppBar(
         toolbarHeight: 80,
         backgroundColor: Colors.transparent,

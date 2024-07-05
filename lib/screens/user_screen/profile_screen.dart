@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
 import 'package:recipe_app/screens/user_screen/saved_recipes_screeen.dart';
+import 'package:recipe_app/widgets/bottombar/bottom_nav_bar.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/widgets/buttons/sidebarbutton.dart';
 import 'package:recipe_app/colors/main_bg_colors.dart';
@@ -17,8 +18,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
-
   @override
   void initState() {
     super.initState();
@@ -27,20 +26,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mainbgcolor,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white, size: 35),
         backgroundColor: Colors.transparent,
-        title: const Center(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BottomNavBar(
+                          userdetails: widget.userdetails,
+                        )),
+                (route) => route.isFirst,
+              );
+            },
+            icon: const Icon(Icons.arrow_back)),
+        title: Center(
             child: Padding(
-          padding: EdgeInsets.only(right: 50),
+          padding: const EdgeInsets.only(right: 50),
           child: Text(
             "My Profile",
-            style: TextStyle(color: Colors.white, fontSize: 30),
+            style: TextStyle(color: fontColor, fontSize: 30),
           ),
         )),
         toolbarHeight: 75,
@@ -80,13 +89,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Text(
                               widget.userdetails.username.toUpperCase(),
-                              style: const TextStyle(
-                                  fontSize: 30, color: Colors.white),
+                              style: TextStyle(fontSize: 30, color: fontColor),
                             ),
                             Text(
                               widget.userdetails.email,
-                              style: const TextStyle(
-                                  fontSize: 15, color: Colors.white),
+                              style: TextStyle(fontSize: 15, color: fontColor),
                             )
                           ],
                         ),

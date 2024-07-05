@@ -32,26 +32,25 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mainbgcolor,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(right: 150),
+             Padding(
+              padding: const EdgeInsets.only(right: 150),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Text(
                     "Welcome",
-                    style: TextStyle(color: Colors.white, fontSize: 40),
+                    style: TextStyle(color: fontColor, fontSize: 40),
                   ),
                   Text(
                     "Back",
-                    style: TextStyle(color: Colors.white, fontSize: 30),
+                    style: TextStyle(color: fontColor, fontSize: 30),
                   ),
                 ],
               ),
@@ -63,9 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                     Text(
                       " Login",
-                      style: TextStyle(color: Colors.white, fontSize: 30),
+                      style: TextStyle(color: fontColor, fontSize: 30),
                     ),
                     const SizedBox(
                       height: 20,
@@ -111,9 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 builder: (context) => const SignupScreen()),
                             (route) => false);
                       },
-                      child: const Text(
+                      child:  Text(
                         "  Create an Account",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
+                        style: TextStyle(color: fontColor, fontSize: 15),
                       ),
                     )
                   ],

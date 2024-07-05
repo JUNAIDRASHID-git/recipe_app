@@ -133,7 +133,7 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                                         context: context,
                                         builder: (context) {
                                          return DialogMessageWidget(
-                                            data: data,
+                                           
                                             yesAction: () {  
                                               deleteRecipe(data.id);
                                               Navigator.pop(context);

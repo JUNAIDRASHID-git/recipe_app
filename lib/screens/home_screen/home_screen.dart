@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/home_screen/home_drawer.dart';
@@ -26,7 +27,7 @@ class _HomeState extends State<Home> {
       drawer: HomeDrawer(userdetails: widget.userdetails),
       appBar: AppBar(
         leading: Padding(
-          padding: const EdgeInsets.only(left: 20),
+          padding: const EdgeInsets.only(left: 20,top: 10),
           child: Builder(
             builder: (context) => IconButton(
                 onPressed: () {
@@ -40,19 +41,21 @@ class _HomeState extends State<Home> {
           size: 40,
         ),
         backgroundColor: Colors.transparent,
-        toolbarHeight: 60,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 20),
+        toolbarHeight: 75,
+        title:  Padding(
+          padding: const EdgeInsets.only(left: 35,top: 10),
           child: Text(
             "Recipe Heaven",
             style: TextStyle(
-              fontSize: 30,
-              color: Colors.white,
+              fontSize: 40,
+              color: fontColor,
+              fontWeight: FontWeight.w700,
+              fontFamily: "Oswald"
             ),
           ),
         ),
       ),
-      backgroundColor: const Color.fromARGB(180, 75, 75, 75),
+      
       body: SafeArea(
           child: Container(
         color: Colors.transparent,

@@ -43,7 +43,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         },
       ),
       bottomNavigationBar: CurvedNavigationBar(
-        animationDuration: const Duration(milliseconds: 350),
+        animationDuration: const Duration(milliseconds: 300),
         buttonBackgroundColor: const Color.fromARGB(255, 101, 101, 101),
         backgroundColor: Colors.transparent,
         color: const Color.fromARGB(255, 101, 101, 101),

@@ -27,26 +27,25 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mainbgcolor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(right: 150),
+             Padding(
+              padding: const EdgeInsets.only(right: 150),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Text(
                     "Create",
-                    style: TextStyle(color: Colors.white, fontSize: 40),
+                    style: TextStyle(color: fontColor, fontSize: 40),
                   ),
                   Text(
                     "Your Account",
-                    style: TextStyle(color: Colors.white, fontSize: 30),
+                    style: TextStyle(color: fontColor, fontSize: 30),
                   ),
                 ],
               ),
@@ -60,9 +59,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                     Text(
                       " REGISTER",
-                      style: TextStyle(color: Colors.white, fontSize: 30),
+                      style: TextStyle(color: fontColor, fontSize: 30),
                     ),
                     const SizedBox(
                       height: 20,
@@ -73,9 +72,11 @@ class _SignupScreenState extends State<SignupScreen> {
                       obscuretext: false,
                       controller: _emailController,
                       validator: (value) {
-                        
-                        if(value==null || value.isEmpty){
-                            return "Enter Your Email";
+                        if (value == null || value.isEmpty) {
+                          return "Enter your email";
+                        }
+                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          return "Enter a valid email address";
                         }
                         return null;
                       },
@@ -85,12 +86,15 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     TextFieldMain(
                       icon: const Icon(Icons.person),
-                      prefixText: "UserName",
+                      prefixText: "Username",
                       obscuretext: false,
                       controller: _usernameController,
                       validator: (value) {
-                        if(value==null || value.isEmpty){
-                            return "Please Enter UserName";
+                        if (value == null || value.isEmpty) {
+                          return "Please enter a username";
+                        }
+                        if (value.length < 3) {
+                          return "Username must be at least 3 characters long";
                         }
                         return null;
                       },
@@ -104,8 +108,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       obscuretext: true,
                       controller: _passwordController,
                       validator: (value) {
-                        if(value==null || value.isEmpty){
-                            return "Please Fill The Password";
+                        if (value == null || value.isEmpty) {
+                          return "Please fill in the password";
+                        }
+                        if (value.length < 6) {
+                          return "Password must be at least 6 characters long";
+                        }
+                        if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(value)) {
+                          return "Password must contain both letters and numbers";
                         }
                         return null;
                       },
@@ -121,9 +131,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                 builder: (context) => const LoginScreen()),
                             (route) => false);
                       },
-                      child: const Text(
+                      child:  Text(
                         "   Already have an Account",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
+                        style: TextStyle(color: fontColor, fontSize: 15),
                       ),
                     )
                   ],
@@ -136,17 +146,16 @@ class _SignupScreenState extends State<SignupScreen> {
             MainButton(
               buttonTitle: "Sign Up",
               buttonAction: () {
-                
-               if(_formKey.currentState!.validate()){
-                 addUser(
+                if (_formKey.currentState!.validate()) {
+                  addUser(
                     email: _emailController.text,
                     username: _usernameController.text,
                     password: _passwordController.text,
                     id: DateTime.now().millisecondsSinceEpoch.toString());
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const LoginScreen()));
-               }
-               log("sign up pressed");
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const LoginScreen()));
+                }
+                log("Sign up pressed");
               },
             ),
           ],

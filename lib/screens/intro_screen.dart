@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/screens/user_screen/login_screen.dart';
 
@@ -9,26 +10,25 @@ class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(180, 75, 75, 75),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(right: 60),
+             Padding(
+              padding: const EdgeInsets.only(right: 60),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  Text(
+                   Text(
                     "Make",
-                    style: TextStyle(color: Colors.white, fontSize: 40),
+                    style: TextStyle(color: fontColor, fontSize: 40),
                   ),
                   Text(
                     "Your Magical Food",
-                    style: TextStyle(color: Colors.white, fontSize: 30),
+                    style: TextStyle(color: fontColor, fontSize: 30),
                   ),
                 ],
               ),

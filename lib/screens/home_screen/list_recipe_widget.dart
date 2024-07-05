@@ -45,8 +45,9 @@ class _ListRecipeState extends State<ListRecipe> {
         filteredRecipes = filteredRecipes.isEmpty && _searchController.text.isEmpty ? recipeList: filteredRecipes;
         return Column(
           children: [
+
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 15),
               child: TextField(
                 controller: _searchController,
                 decoration: const InputDecoration(
@@ -60,15 +61,13 @@ class _ListRecipeState extends State<ListRecipe> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   final data = filteredRecipes[index];
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(

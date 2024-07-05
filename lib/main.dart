@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/intro_screen.dart';
@@ -19,11 +20,10 @@ void main() async {
   }
   await Hive.openBox<User>("user_db");
   await Hive.openBox<Recipe>("recipe_db");
+  
 
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Color.fromARGB(0, 75, 75, 75),
-    systemNavigationBarColor: Color.fromARGB(203, 0, 0, 0),
-  ));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: mainbgcolor, systemNavigationBarColor: mainbgcolor));
   runApp(const MyApp());
 }
 
@@ -32,10 +32,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme:
+          ThemeData(fontFamily: "Roboto", scaffoldBackgroundColor: mainbgcolor),
       title: 'Flutter Demo',
-      home: IntroScreen(),
+      home: const IntroScreen(),
     );
   }
 }

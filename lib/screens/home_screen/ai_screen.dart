@@ -7,12 +7,12 @@ class AIScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mainbgcolor,
+
       extendBody: true,
-      body: const Center(
+      body:  Center(
         child: Text(
           "Generate Recipe",
-          style: TextStyle(fontSize: 40, color: Colors.white),
+          style: TextStyle(fontSize: 40, color: fontColor),
         ),
       ),
     );

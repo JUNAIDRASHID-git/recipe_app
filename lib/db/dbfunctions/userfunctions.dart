@@ -6,6 +6,7 @@ import 'package:recipe_app/db/models/userdb.dart';
 
 ValueNotifier<List<Recipe>> userRecipeNotifier = ValueNotifier([]);
 
+
 void addUser({
   required String email,
   required String username,
@@ -28,6 +29,8 @@ void addUser({
 void addUserRecipe({required id, required User value}) async {
   final userDB = await Hive.openBox<User>("user_db");
   userDB.put(id, value);
+  // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+  userRecipeNotifier.notifyListeners;
 }
 
 void getUser({required id}) async {
@@ -35,9 +38,9 @@ void getUser({required id}) async {
   userRecipeNotifier.value.clear();
   final user = userDB.get(id);
   user!.userRecipe?.forEach(
-    (element) {
-      userRecipeNotifier.value.add(element);
-    },
+   (element) {
+     userRecipeNotifier.value.add(element);
+   },
   );
   // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
   userRecipeNotifier.notifyListeners;
@@ -51,12 +54,12 @@ void getAllUSers() async {
   }
 }
 
-void deleteUserRecipe(String id, Recipe ids) async {
+void deleteUserRecipe(String id,int index) async {
   final recipeDB = await Hive.openBox<User>("user_db");
   final user = recipeDB.get(id);
   final userRecipe = user!.userRecipe;
-  userRecipe?.remove(ids);
-  userRecipeNotifier.value.remove(ids);
+  userRecipe!.removeAt(index);
+  userRecipeNotifier.value.removeAt(index);
   // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
   userRecipeNotifier.notifyListeners;
 }
