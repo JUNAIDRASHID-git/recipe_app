@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
@@ -30,7 +29,6 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
   void initState() {
     super.initState();
     getUser(id: widget.userdetails.id);
-    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
     userRecipeNotifier;
   }
 
@@ -43,7 +41,8 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
         iconTheme: const IconThemeData(color: Colors.white, size: 35),
         leading: IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen(userdetails: widget.userdetails)));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>ProfileScreen(userdetails: widget.userdetails)));
             },
             icon: const Icon(Icons.arrow_back)),
         title: const Padding(
@@ -52,8 +51,7 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
       ),
       body: ValueListenableBuilder(
         valueListenable: userRecipeNotifier,
-        builder:
-            (BuildContext context, List<Recipe> userRecipeList, Widget? child) {
+        builder:(BuildContext context, List<Recipe> userRecipeList, Widget? child) {
           return userRecipeList.isEmpty
               ? Center(
                   child: Text(
@@ -63,9 +61,7 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                 )
               : Column(
                   children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     Expanded(
                       child: ListView.separated(
                         itemBuilder: (context, index) {
@@ -75,8 +71,7 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      RecipeDetailScreen(recipedetails: data),
+                                  builder: (context) =>RecipeDetailScreen(recipedetails: data),
                                 ));
                               },
                               child: Container(
@@ -87,13 +82,11 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                 ),
                                 width: 80,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 25),
+                                  padding: const EdgeInsets.symmetric(horizontal: 25),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                         children: [
                                           RecipeTileWidget(data: data),
                                           IconButton(
@@ -112,20 +105,14 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                           ),
                                         ],
                                       ),
-                                      ImageWidgetContainer(
-                                        data: data,
-                                      ),
+                                      ImageWidgetContainer(data: data),
                                       Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment:CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
+                                            padding: const EdgeInsets.symmetric(horizontal: 10),
                                             child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                               children: [
                                                 VegWidgetContainer(data: data),
                                                 TimeWidgetContainer(data: data),
@@ -133,31 +120,25 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 5),
-                                            child: RecipeDescriptionWidget(
-                                                data: data),
+                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                                            child: RecipeDescriptionWidget(data: data),
                                           ),
                                           DeleteEditButton(
                                             buttonAction: () {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      UserRecipeEditScreen(
+                                                  builder: (context) =>UserRecipeEditScreen(
                                                     recipeData: data,
-                                                    userData:
-                                                        widget.userdetails,
+                                                    userData:widget.userdetails,
                                                     index: index,
                                                   ),
                                                 ),
                                               );
                                             },
                                             buttonTitle: 'EDIT',
-                                            color: const Color.fromARGB(
-                                                255, 35, 35, 35),
-                                            fontSize: 20,
-                                          ),
+                                            color: editButtonColor,
+                                            fontSize: 20),
                                           DeleteEditButton(
                                             buttonAction: () {
                                               showDialog(
@@ -165,15 +146,13 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                                 builder: (context) {
                                                   return DialogMessageWidget(
                                                       yesAction: () {
-                                                        deleteUserRecipe(
-                                                            widget
-                                                                .userdetails.id,
-                                                            index);
+                                                        setState(() {
+                                                          deleteUserRecipe(widget.userdetails.id,index);
+                                                        });
                                                         log("delete pressed");
                                                         Navigator.pop(context);
                                                       },
-                                                      messageText:
-                                                          "Do you want to Delete?");
+                                                      messageText:"Do you want to Delete?");
                                                 },
                                               );
                                             },
@@ -194,8 +173,7 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                             ),
                           );
                         },
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 20),
+                        separatorBuilder: (context, index) =>const SizedBox(height: 20),
                         itemCount: userRecipeList.length,
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 
 class SidebarButtons extends StatelessWidget {
   const SidebarButtons({super.key, required this.text, required this.action});
@@ -12,17 +13,19 @@ class SidebarButtons extends StatelessWidget {
       onTap: action,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: const BorderRadius.all(Radius.circular(30))
-        ),
+            color: mainbgcolor,
+            borderRadius: const BorderRadius.all(Radius.circular(30))),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                text,
-                style: const TextStyle(color: Colors.white, fontSize: 25),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  text,
+                  style: const TextStyle(color: Colors.white, fontSize: 25),
+                ),
               ),
               const Icon(
                 Icons.arrow_forward,

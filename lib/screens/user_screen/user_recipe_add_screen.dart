@@ -10,7 +10,7 @@ import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/widgets/buttons/user_add_recipe_buttons.dart';
 import 'package:recipe_app/widgets/containers/add_image_container.dart';
 import 'package:recipe_app/widgets/formfields/recipe_form.dart';
-import 'package:recipe_app/widgets/textfields/addrecipe_textfield.dart';
+import 'package:recipe_app/widgets/textfields/recipe_time_field.dart';
 
 class UserRecipeAddScreen extends StatefulWidget {
   const UserRecipeAddScreen({super.key, required this.userdetails});
@@ -24,7 +24,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
   final _timeController = TextEditingController();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-  final _ingredianceController = TextEditingController();
+  final List<String> _ingredianceController = [];
   final _instructionController = TextEditingController();
   bool veg = true;
   File? selectedImage;
@@ -73,16 +73,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        height: 65,
-                        width: 153,
-                        child: TextFieldAddRecipe(
-                          keyboardType: TextInputType.number,
-                          controller: _timeController,
-                          label: 'Time',
-                          prefixIcon: const Icon(Icons.edit),
-                        ),
-                      ),
+                      timeFormField(timeController: _timeController),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.grey,
@@ -117,10 +108,11 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                   ),
                   sizedBox,
                   RecipeFormWidget(
-                      titleController: _titleController,
-                      descriptionController: _descriptionController,
-                      ingredianceController: _ingredianceController,
-                      instructionController: _instructionController)
+                    titleController: _titleController,
+                    descriptionController: _descriptionController,
+                    instructionController: _instructionController,
+                    ingredientsList: [..._ingredianceController],
+                  )
                 ],
               ),
             ),
@@ -137,15 +129,16 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                       veg = selectedItem == "VEG";
                       final time = int.tryParse(_timeController.text) ?? 0;
                       final value = Recipe(
-                          image: selectedImage!.path,
-                          title: _titleController.text,
-                          time: time,
-                          description: _descriptionController.text,
-                          ingrediants: _ingredianceController.text,
-                          instruction: _instructionController.text,
-                          id: DateTime.now().millisecondsSinceEpoch.toString(),
-                          veg: veg,
-                          fav: false);
+                        image: selectedImage!.path,
+                        title: _titleController.text,
+                        time: time,
+                        description: _descriptionController.text,
+                        instruction: _instructionController.text,
+                        id: DateTime.now().millisecondsSinceEpoch.toString(),
+                        veg: veg,
+                        fav: false,
+                        ingrediants:_ingredianceController,
+                      );
                       addRecipe(value);
                       setState(() {
                         clearField();
@@ -168,7 +161,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                           title: _titleController.text,
                           time: time,
                           description: _descriptionController.text,
-                          ingrediants: _ingredianceController.text,
+                          ingrediants: _ingredianceController,
                           instruction: _instructionController.text,
                           id: DateTime.now().millisecondsSinceEpoch.toString(),
                           veg: veg,
@@ -195,6 +188,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                 ],
               ),
             ),
+            const SizedBox(height: 70)
           ],
         ),
       ),
@@ -212,6 +206,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
   Future<void> imagePicker() async {
     final imagePick =
         await ImagePicker().pickImage(source: ImageSource.gallery);
+
     setState(() {
       if (imagePick != null) {
         selectedImage = File(imagePick.path);

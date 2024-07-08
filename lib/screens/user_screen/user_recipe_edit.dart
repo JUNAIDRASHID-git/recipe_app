@@ -10,7 +10,7 @@ import 'package:recipe_app/screens/user_screen/saved_recipes_screeen.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/widgets/containers/add_image_container.dart';
 import 'package:recipe_app/widgets/formfields/recipe_form.dart';
-import 'package:recipe_app/widgets/textfields/addrecipe_textfield.dart';
+import 'package:recipe_app/widgets/textfields/recipe_time_field.dart';
 
 class UserRecipeEditScreen extends StatefulWidget {
   final Recipe recipeData;
@@ -27,10 +27,10 @@ class UserRecipeEditScreen extends StatefulWidget {
 }
 
 class _UserEditScreenState extends State<UserRecipeEditScreen> {
-  final _timeController = TextEditingController();
+  TextEditingController _timeController = TextEditingController();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _ingredianceController = TextEditingController();
+  final List<String> _ingredianceController = [];
   TextEditingController _instructionController = TextEditingController();
   bool veg = true;
   File? selectedImage;
@@ -41,11 +41,12 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
   void initState() {
     super.initState();
     selectedImage = File(widget.recipeData.image);
+    _timeController =
+        TextEditingController(text: widget.recipeData.time.toString());
     _titleController = TextEditingController(text: widget.recipeData.title);
     _descriptionController =
         TextEditingController(text: widget.recipeData.description);
-    _ingredianceController =
-        TextEditingController(text: widget.recipeData.ingrediants);
+    // incrediance
     _instructionController =
         TextEditingController(text: widget.recipeData.instruction);
   }
@@ -96,16 +97,7 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        height: 65,
-                        width: 153,
-                        child: TextFieldAddRecipe(
-                          keyboardType: TextInputType.number,
-                          controller: _timeController,
-                          label: 'Time',
-                          prefixIcon: const Icon(Icons.edit),
-                        ),
-                      ),
+                      timeFormField(timeController: _timeController),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.grey,
@@ -138,23 +130,20 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   RecipeFormWidget(
-                      titleController: _titleController,
-                      descriptionController: _descriptionController,
-                      ingredianceController: _ingredianceController,
-                      instructionController: _instructionController)
+                    titleController: _titleController,
+                    descriptionController: _descriptionController,
+                    instructionController: _instructionController,
+                    ingredientsList: _ingredianceController,
+                  )
                 ],
               ),
             ),
-            const SizedBox(
-              height: 50,
-            ),
+            const SizedBox(height: 50),
             MainButton(
                 buttonTitle: "Update",
-                buttonAction: () {
+                buttonAction: () async {
                   veg = selectedItem == "VEG";
 
                   final time = int.tryParse(_timeController.text) ?? 0;
@@ -162,6 +151,7 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                   List<Recipe> recipeList = [
                     ...widget.userData.userRecipe ?? []
                   ];
+
                   recipeList.removeAt(widget.index);
 
                   var recipe = Recipe(
@@ -169,7 +159,7 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                       title: _titleController.text,
                       time: time,
                       description: _descriptionController.text,
-                      ingrediants: _ingredianceController.text,
+                      ingrediants: _ingredianceController,
                       instruction: _instructionController.text,
                       id: DateTime.now().millisecondsSinceEpoch.toString(),
                       veg: veg,
@@ -191,7 +181,8 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => UserSavedRecipes(userdetails: widget.userData)));
+                          builder: (context) =>
+                              UserSavedRecipes(userdetails: widget.userData)));
                 })
           ],
         ),

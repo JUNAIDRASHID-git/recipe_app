@@ -68,7 +68,7 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
             const SizedBox(
               height: 30,
             ),
-            Expanded(
+            filteredRecipes.isNotEmpty ? Expanded(
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   final data = filteredRecipes[index];
@@ -159,7 +159,10 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                 ),
                 itemCount: filteredRecipes.length,
               ),
-            ),
+            ) :  Padding(
+              padding: const EdgeInsets.only(top: 250),
+              child: Text("No Data Found",style: TextStyle(color: fontColor,fontSize: 30),),
+            )
           ],
         );
       },

@@ -21,7 +21,7 @@ class RecipeAdapter extends TypeAdapter<Recipe> {
       title: fields[1] as String,
       time: fields[2] as int,
       description: fields[3] as String,
-      ingrediants: fields[4] as String,
+      ingrediants: (fields[4] as List).cast<String>(),
       instruction: fields[5] as String,
       id: fields[8] as String,
       veg: fields[6] as bool,

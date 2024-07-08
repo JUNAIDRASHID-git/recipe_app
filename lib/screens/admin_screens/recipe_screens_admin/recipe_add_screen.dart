@@ -6,8 +6,8 @@ import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/widgets/formfields/recipe_form.dart';
-import 'package:recipe_app/widgets/textfields/addrecipe_textfield.dart';
 import 'package:recipe_app/widgets/containers/add_image_container.dart';
+import 'package:recipe_app/widgets/textfields/recipe_time_field.dart';
 
 class AddRecipeAdmin extends StatefulWidget {
   const AddRecipeAdmin({super.key});
@@ -20,7 +20,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
   final _timeController = TextEditingController();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-  final _ingredianceController = TextEditingController();
+  final List<String> _ingredianceController = [];
   final _instructionController = TextEditingController();
   bool veg = true;
   File? selectedImage;
@@ -33,11 +33,11 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
 
   @override
   void dispose() {
-    _timeController.dispose();
-    _titleController.dispose();
-    _descriptionController.dispose();
-    _ingredianceController.dispose();
-    _instructionController.dispose();
+    _timeController;
+    _titleController;
+    _descriptionController;
+    _ingredianceController;
+    _instructionController;
     super.dispose();
   }
 
@@ -87,16 +87,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        height: 65,
-                        width: 153,
-                        child: TextFieldAddRecipe(
-                          keyboardType: TextInputType.number,
-                          controller: _timeController,
-                          label: 'Time',
-                          prefixIcon: const Icon(Icons.edit),
-                        ),
-                      ),
+                      timeFormField(timeController: _timeController),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.grey,
@@ -131,10 +122,11 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                   ),
                   sizedBox,
                   RecipeFormWidget(
-                      titleController: _titleController,
-                      descriptionController: _descriptionController,
-                      ingredianceController: _ingredianceController,
-                      instructionController: _instructionController)
+                    titleController: _titleController,
+                    descriptionController: _descriptionController,
+                    instructionController: _instructionController,
+                    ingredientsList: _ingredianceController,
+                  ),
                 ],
               ),
             ),
@@ -152,13 +144,14 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                       title: _titleController.text,
                       time: time,
                       description: _descriptionController.text,
-                      ingrediants: _ingredianceController.text,
+                      ingrediants: _ingredianceController,
                       instruction: _instructionController.text,
                       veg: veg,
                       id: DateTime.now().millisecondsSinceEpoch.toString(),
                       fav: false);
 
                   addRecipe(value);
+                  log(_ingredianceController.iterator.toString());
 
                   Navigator.pop(context);
                 })

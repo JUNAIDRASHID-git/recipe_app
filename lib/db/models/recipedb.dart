@@ -12,7 +12,7 @@ class Recipe {
   @HiveField(3)
   String description;
   @HiveField(4)
-  String ingrediants;
+  List<String> ingrediants;
   @HiveField(5)
   String instruction;
   @HiveField(6)

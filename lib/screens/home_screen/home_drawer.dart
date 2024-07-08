@@ -17,11 +17,12 @@ class HomeDrawer extends StatelessWidget {
       child: SafeArea(
           child: Column(
         children: [
-           Padding(
+          Padding(
             padding: const EdgeInsets.only(right: 5, bottom: 20, top: 10),
             child: Text(
               "Menu",
-              style: TextStyle(color: fontColor, fontSize: 30),
+              style: TextStyle(
+                  color: fontColor, fontSize: 30, fontFamily: "Roboto"),
             ),
           ),
           const Padding(
@@ -41,14 +42,6 @@ class HomeDrawer extends StatelessWidget {
                             userdetails: userdetails,
                           )));
                   log("Profile Cilcked");
-                },
-              )),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: SidebarButtons(
-                text: "Saved Recipes",
-                action: () {
-                  log("Saved Recipes Clicked");
                 },
               )),
           Padding(

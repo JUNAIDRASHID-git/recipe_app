@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:recipe_app/db/models/userdb.dart';
+import 'package:recipe_app/screens/admin_screens/admin_home_screen.dart';
 import 'package:recipe_app/widgets/bottombar/bottom_nav_bar.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/colors/main_bg_colors.dart';
-import 'package:recipe_app/screens/admin_screens/admin_home_screen.dart';
 import 'package:recipe_app/screens/user_screen/signup_screen.dart';
 import 'package:recipe_app/widgets/textfields/textfield.dart';
 
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-             Padding(
+            Padding(
               padding: const EdgeInsets.only(right: 150),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     Text(
+                    Text(
                       " Login",
                       style: TextStyle(color: fontColor, fontSize: 30),
                     ),
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 builder: (context) => const SignupScreen()),
                             (route) => false);
                       },
-                      child:  Text(
+                      child: Text(
                         "  Create an Account",
                         style: TextStyle(color: fontColor, fontSize: 15),
                       ),
@@ -137,45 +137,41 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() {
-  String admin = "admin";
-  String adminPass = "admin123";
+    String admin = "admin";
+    String adminPass = "admin123";
 
-  String userName = _usernameController.text;
-  String password = _passwordController.text;
+    String userName = _usernameController.text;
+    String password = _passwordController.text;
 
-  bool found = false;
+    bool found = false;
 
-  for (var element in userDB.values) {
-    if (element.username == userName && element.password == password) {
-      log("user ${element.username} successfully logged in");
-      found = true;
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => BottomNavBar(
-          userdetails: element,
-        ),
-      ));
-      break;
+    for (var element in userDB.values) {
+      if (element.username == userName && element.password == password) {
+        log("user ${element.username} successfully logged in");
+        found = true;
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => BottomNavBar(
+            userdetails: element,
+          ),
+        ));
+        break;
+      }
+    }
+
+    if (!found) {
+      if (admin == userName && adminPass == password) {
+        log("admin logged in");
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const AdminScreen()),
+            (route) => false);
+      } else {
+        log("Invalid password");
+        const snackBar = SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("! Please Enter Correct Username And Password"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     }
   }
-
-  if (!found) {
-    if (admin == userName && adminPass == password) {
-      log("admin logged in");
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const AdminScreen()),
-          (route) => false);
-    } else {
-      log("Invalid password");
-      const snackBar = SnackBar(
-        backgroundColor: Colors.red,
-        content: Text("! Please Enter Correct Username And Password"),
-      );
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-  }
-}
-
 }

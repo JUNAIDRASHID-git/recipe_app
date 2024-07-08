@@ -18,6 +18,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  SizedBox sizedBox = const SizedBox(width: 20);
+
   @override
   void initState() {
     super.initState();
@@ -37,9 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => BottomNavBar(
-                          userdetails: widget.userdetails,
-                        )),
+                    builder: (context) => BottomNavBar(userdetails: widget.userdetails)),
                 (route) => route.isFirst,
               );
             },
@@ -69,19 +69,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   child: Row(
                     children: [
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        child: Image(
-                          image: AssetImage("assets/logos/userdefault.jpg"),
-                          height: 100,
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          child: Image(
+                            image: AssetImage("assets/logos/userdefault.jpg"),
+                            height: 100,
+                          ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 20,
-                      ),
+                      sizedBox,
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 35),
                         child: Column(
@@ -106,9 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: const EdgeInsets.all(25.0),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    sizedBox,
                     SidebarButtons(
                       text: 'Saved Recipes',
                       action: () {

@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/widgets/formfields/recipe_form.dart';
-import 'package:recipe_app/widgets/textfields/addrecipe_textfield.dart';
 import 'package:recipe_app/widgets/containers/add_image_container.dart';
+import 'package:recipe_app/widgets/textfields/recipe_time_field.dart';
 
 class UpdateRecipeadmin extends StatefulWidget {
   final Recipe recipeData;
@@ -19,10 +18,10 @@ class UpdateRecipeadmin extends StatefulWidget {
 }
 
 class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
-  final _timeController = TextEditingController();
+  TextEditingController _timeController = TextEditingController();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _ingredianceController = TextEditingController();
+  final List<String> _ingredianceController = [];
   TextEditingController _instructionController = TextEditingController();
   bool veg = true;
   File? selectedImage;
@@ -33,11 +32,13 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
   void initState() {
     super.initState();
     selectedImage = File(widget.recipeData.image);
+    _timeController =
+        TextEditingController(text: widget.recipeData.time.toString());
     _titleController = TextEditingController(text: widget.recipeData.title);
     _descriptionController =
         TextEditingController(text: widget.recipeData.description);
-    _ingredianceController =
-        TextEditingController(text: widget.recipeData.ingrediants);
+
+        // ingrediance init
     _instructionController =
         TextEditingController(text: widget.recipeData.instruction);
   }
@@ -88,16 +89,7 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        height: 65,
-                        width: 153,
-                        child: TextFieldAddRecipe(
-                          keyboardType: TextInputType.number,
-                          controller: _timeController,
-                          label: 'Time',
-                          prefixIcon: const Icon(Icons.edit),
-                        ),
-                      ),
+                      timeFormField(timeController: _timeController),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.grey,
@@ -130,14 +122,14 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   RecipeFormWidget(
-                      titleController: _titleController,
-                      descriptionController: _descriptionController,
-                      ingredianceController: _ingredianceController,
-                      instructionController: _instructionController),
+                    titleController: _titleController,
+                    descriptionController: _descriptionController,
+                    ingredientsList: _ingredianceController,
+                    instructionController: _instructionController,
+                    
+                  ),
                 ],
               ),
             ),
@@ -156,11 +148,11 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                       title: _titleController.text,
                       time: time,
                       description: _descriptionController.text,
-                      ingrediants: _ingredianceController.text,
+                     
                       instruction: _instructionController.text,
                       veg: veg,
                       id: widget.recipeData.id,
-                      fav: false);
+                      fav: false, ingrediants:_ingredianceController,);
 
                   updateRecipe(value);
                   Navigator.pop(context);
