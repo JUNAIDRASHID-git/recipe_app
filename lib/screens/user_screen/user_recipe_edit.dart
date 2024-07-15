@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/colors/main_bg_colors.dart';
-import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
+import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/user_screen/saved_recipes_screeen.dart';
@@ -39,6 +39,7 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
 
   @override
   void initState() {
+    userRecipeNotifier;
     super.initState();
     selectedImage = File(widget.recipeData.image);
     _timeController =
@@ -76,7 +77,7 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: FloatingActionButton(
-                    backgroundColor: const Color.fromARGB(255, 81, 81, 81),
+                    backgroundColor: floatActionButtonColor,
                     child: const Icon(
                       Icons.add_a_photo_outlined,
                       color: Colors.white,
@@ -148,12 +149,11 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
 
                   final time = int.tryParse(_timeController.text) ?? 0;
 
-                  List<Recipe> recipeList = [
-                    ...widget.userData.userRecipe ?? []
-                  ];
+                  widget.userData.userRecipe!.remove(widget.recipeData);
+                  List<Recipe> recipeList = [...widget.userData.userRecipe!];
 
-                  recipeList.removeAt(widget.index);
-
+                  
+                  
                   var recipe = Recipe(
                       image: selectedImage!.path,
                       title: _titleController.text,
@@ -174,15 +174,12 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                       id: widget.userData.id,
                       userRecipe: recipeList);
 
-                  addUserRecipe(id: widget.userData.id, value: userValue);
-                  // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-                  userRecipeNotifier.notifyListeners;
+                  log("${recipeList.length}");
 
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              UserSavedRecipes(userdetails: widget.userData)));
+                  
+                  addUserRecipe(id: widget.userData.id, value: userValue);
+                  getUser(id: widget.userData.id);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSavedRecipes(userdetails: userValue)));
                 })
           ],
         ),

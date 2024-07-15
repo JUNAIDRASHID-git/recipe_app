@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/colors/main_bg_colors.dart';
-import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
-import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
+import 'package:recipe_app/db/functions/db_functions/recipe_functions.dart';
+import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/widgets/buttons/user_add_recipe_buttons.dart';
@@ -111,7 +111,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                     titleController: _titleController,
                     descriptionController: _descriptionController,
                     instructionController: _instructionController,
-                    ingredientsList: [..._ingredianceController],
+                    ingredientsList:_ingredianceController,
                   )
                 ],
               ),
@@ -134,16 +134,15 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                         time: time,
                         description: _descriptionController.text,
                         instruction: _instructionController.text,
+                        ingrediants:_ingredianceController,
                         id: DateTime.now().millisecondsSinceEpoch.toString(),
                         veg: veg,
                         fav: false,
-                        ingrediants:_ingredianceController,
                       );
                       addRecipe(value);
-                      setState(() {
+                      log("${_ingredianceController.length}");
                         clearField();
-                      });
-                      log("save draft pressed");
+                      log("Publish pressed");
                     },
                   ),
                   UserAddRecipeButton(
@@ -152,9 +151,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                       veg = selectedItem == "VEG";
                       final time = int.tryParse(_timeController.text) ?? 0;
 
-                      List<Recipe> recipeList = [
-                        ...widget.userdetails.userRecipe ?? []
-                      ];
+                      List<Recipe> recipeList = [...widget.userdetails.userRecipe!];
 
                       var recipe = Recipe(
                           image: selectedImage!.path,
@@ -176,8 +173,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                           id: widget.userdetails.id,
                           userRecipe: recipeList);
 
-                      addUserRecipe(
-                          id: widget.userdetails.id, value: userValue);
+                      addUserRecipe(id: widget.userdetails.id, value: userValue);
                       log("${userValue.userRecipe}");
                       log("save draft pressed");
                       setState(() {
@@ -198,7 +194,6 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
   void clearField() {
     _titleController.clear();
     _descriptionController.clear();
-    _ingredianceController.clear();
     _instructionController.clear();
     _timeController.clear();
   }

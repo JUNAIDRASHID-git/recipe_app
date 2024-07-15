@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
@@ -11,6 +13,7 @@ void addRecipe(Recipe value) async {
   recipeNotifier.value.add(value);
   // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
   recipeNotifier.notifyListeners();
+  log("${newRecipe.ingrediants.length}");
 }
 
 void getAllRecipes() async {

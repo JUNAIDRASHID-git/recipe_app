@@ -2,8 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
-import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
+import 'package:recipe_app/db/functions/db_functions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/widgets/formfields/recipe_form.dart';
 import 'package:recipe_app/widgets/containers/add_image_container.dart';
@@ -31,15 +32,14 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
   List<String> isveg = ["VEG", "NON-VEG"];
   String selectedItem = "VEG";
 
+
   @override
-  void dispose() {
-    _timeController;
-    _titleController;
-    _descriptionController;
-    _ingredianceController;
-    _instructionController;
-    super.dispose();
+  void initState() {
+    super.initState();
+    _ingredianceController.clear();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: FloatingActionButton(
-                    backgroundColor: const Color.fromARGB(255, 70, 70, 70),
+                    backgroundColor: floatActionButtonColor,
                     child: const Icon(
                       Icons.add_a_photo_outlined,
                       color: Colors.white,
@@ -136,8 +136,19 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
             MainButton(
                 buttonTitle: "Save",
                 buttonAction: () {
+                  if (selectedImage == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Please select an image"),
+                      ),
+                    );
+                    return;
+                  }
+
                   veg = selectedItem == "VEG";
                   final time = int.tryParse(_timeController.text) ?? 0;
+
+                  
 
                   var value = Recipe(
                       image: selectedImage!.path,
@@ -151,10 +162,9 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                       fav: false);
 
                   addRecipe(value);
-                  log(_ingredianceController.iterator.toString());
-
+                  log("${_ingredianceController.length}");
                   Navigator.pop(context);
-                })
+                }),
           ],
         ),
       ),

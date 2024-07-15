@@ -2,8 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
-import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
+import 'package:recipe_app/db/functions/db_functions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/widgets/formfields/recipe_form.dart';
 import 'package:recipe_app/widgets/containers/add_image_container.dart';
@@ -18,6 +19,7 @@ class UpdateRecipeadmin extends StatefulWidget {
 }
 
 class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
+  
   TextEditingController _timeController = TextEditingController();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -37,7 +39,6 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
     _titleController = TextEditingController(text: widget.recipeData.title);
     _descriptionController =
         TextEditingController(text: widget.recipeData.description);
-
         // ingrediance init
     _instructionController =
         TextEditingController(text: widget.recipeData.instruction);
@@ -68,7 +69,7 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: FloatingActionButton(
-                    backgroundColor: const Color.fromARGB(255, 81, 81, 81),
+                    backgroundColor: floatActionButtonColor,
                     child: const Icon(
                       Icons.add_a_photo_outlined,
                       color: Colors.white,
@@ -127,8 +128,7 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
                     titleController: _titleController,
                     descriptionController: _descriptionController,
                     ingredientsList: _ingredianceController,
-                    instructionController: _instructionController,
-                    
+                    instructionController: _instructionController, 
                   ),
                 ],
               ),
@@ -143,18 +143,21 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
 
                   final time = int.tryParse(_timeController.text) ?? 0;
 
+                  
+
                   var value = Recipe(
                       image: selectedImage!.path,
                       title: _titleController.text,
                       time: time,
                       description: _descriptionController.text,
-                     
+                      ingrediants:_ingredianceController,
                       instruction: _instructionController.text,
                       veg: veg,
                       id: widget.recipeData.id,
-                      fav: false, ingrediants:_ingredianceController,);
+                      fav: false,);
 
                   updateRecipe(value);
+                  log("${_ingredianceController.length}");
                   Navigator.pop(context);
                 })
           ],

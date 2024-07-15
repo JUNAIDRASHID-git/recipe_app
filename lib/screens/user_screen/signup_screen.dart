@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/colors/main_bg_colors.dart';
-import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
+import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/screens/user_screen/login_screen.dart';
 import 'package:recipe_app/widgets/textfields/textfield.dart';
 

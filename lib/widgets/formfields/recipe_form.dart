@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/widgets/textfields/addrecipe_textfield.dart';
@@ -23,19 +24,7 @@ class RecipeFormWidget extends StatefulWidget {
 class _RecipeFormWidgetState extends State<RecipeFormWidget> {
   Widget sizedBox = const SizedBox(height: 10);
   List<TextEditingController> ingredientsController = [TextEditingController()];
-  double height = 63;
-
-  @override
-  void dispose() {
-    widget.titleController.dispose();
-    widget.descriptionController.dispose();
-    widget.instructionController.dispose();
-    for (var controller in ingredientsController) {
-      controller.dispose();
-    }
-
-    super.dispose();
-  }
+  double height = 69;
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +33,13 @@ class _RecipeFormWidgetState extends State<RecipeFormWidget> {
         TextFieldAddRecipe(
           controller: widget.titleController,
           label: 'Title',
-          prefixIcon: const Icon(Icons.edit),
+          suffixIcon: const Icon(Icons.edit),
         ),
         sizedBox,
         TextFieldAddRecipe(
           controller: widget.descriptionController,
           label: 'Description',
-          prefixIcon: const Icon(Icons.edit),
+          suffixIcon: const Icon(Icons.edit),
         ),
         sizedBox,
         SizedBox(
@@ -60,12 +49,27 @@ class _RecipeFormWidgetState extends State<RecipeFormWidget> {
             itemCount: ingredientsController.length,
             itemBuilder: (context, index) {
               return TextFormField(
-                scribbleEnabled: true,
                 controller: ingredientsController[index],
+                style: TextStyle(color: fontColor, fontSize: 20),
                 decoration: InputDecoration(
-                  fillColor: Colors.grey,
+                  fillColor: textFormFieldColor,
                   filled: true,
-                  prefixIcon: const Icon(Icons.edit),
+                  suffixIcon: GestureDetector(
+                      onTap: () {
+                        
+                        setState(() {
+                          if (ingredientsController.length>1) {
+                            ingredientsController[index].clear();
+                            widget.ingredientsList.remove(ingredientsController[index].text);
+                            ingredientsController.removeAt(index);
+                            height = height - 80;
+                          }else{
+                            ingredientsController[index].clear();
+                          }
+                          
+                        });
+                      },
+                      child: const Icon(Icons.delete)),
                   labelText: "Ingredient",
                   labelStyle: TextStyle(
                       color: fontColor,
@@ -74,19 +78,29 @@ class _RecipeFormWidgetState extends State<RecipeFormWidget> {
                   border: UnderlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: IconButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            WidgetStatePropertyAll(floatActionButtonColor),
+                      ),
+                      onPressed: () {
                         ingredientsController.add(TextEditingController());
-                        widget.ingredientsList
-                            .add(ingredientsController[index].text);
-                        height = height + 75;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.add,
-                      size: 30,
-                      color: fontColor,
+                        if (ingredientsController[index].text.isNotEmpty) {
+                          widget.ingredientsList.add(ingredientsController[index].text);
+                        }
+                        log('${ingredientsController.length}');
+                        log('${widget.ingredientsList.length}');
+                        setState(() {
+                          height = height + 80;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.add,
+                        size: 30,
+                        color: fontColor,
+                      ),
                     ),
                   ),
                 ),
@@ -103,7 +117,7 @@ class _RecipeFormWidgetState extends State<RecipeFormWidget> {
         TextFieldAddRecipe(
           controller: widget.instructionController,
           label: 'Instructions',
-          prefixIcon: const Icon(Icons.edit),
+          suffixIcon: const Icon(Icons.edit),
         ),
       ],
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
+import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/screens/user_screen/saved_recipes_screeen.dart';
 import 'package:recipe_app/widgets/bottombar/bottom_nav_bar.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';

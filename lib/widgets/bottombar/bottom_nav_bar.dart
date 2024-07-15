@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/db/dbfunctions/userfunctions.dart';
+import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/home_screen/ai_screen.dart';
 import 'package:recipe_app/screens/user_screen/favorite_screen.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/colors/main_bg_colors.dart';
 import 'package:recipe_app/widgets/buttons/edit_delete_button.dart';
-import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
+import 'package:recipe_app/db/functions/db_functions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_edit_screen.dart';
 import 'package:recipe_app/screens/home_screen/recipe_details_screen.dart';

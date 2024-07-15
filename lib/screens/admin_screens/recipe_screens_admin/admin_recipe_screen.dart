@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/db/dbfunctions/recipe_functions.dart';
+import 'package:recipe_app/db/functions/db_functions/recipe_functions.dart';
 import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_add_screen.dart';
 import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_list_admin.dart';
 

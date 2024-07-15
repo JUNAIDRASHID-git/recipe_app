@@ -15,6 +15,7 @@ class User {
   String id;
   @HiveField(4)
   List<Recipe>?userRecipe;
+  
 
   
 

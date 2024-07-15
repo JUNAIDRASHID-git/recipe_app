@@ -40,10 +40,11 @@ void getUser({required id}) async {
   user!.userRecipe?.forEach(
    (element) {
      userRecipeNotifier.value.add(element);
+     // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+    userRecipeNotifier.notifyListeners;
    },
   );
-  // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-  userRecipeNotifier.notifyListeners;
+  
 }
 
 void getAllUSers() async {
