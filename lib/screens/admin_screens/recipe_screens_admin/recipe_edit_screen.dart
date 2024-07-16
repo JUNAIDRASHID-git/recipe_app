@@ -143,8 +143,6 @@ class __UpdateRecipeAdminStateState extends State<UpdateRecipeadmin> {
 
                   final time = int.tryParse(_timeController.text) ?? 0;
 
-                  
-
                   var value = Recipe(
                       image: selectedImage!.path,
                       title: _titleController.text,

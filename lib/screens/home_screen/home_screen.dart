@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
         color: Colors.transparent,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: const ListRecipe(),
+        child:  ListRecipe(userdetails: widget.userdetails),
       )),
     );
   }

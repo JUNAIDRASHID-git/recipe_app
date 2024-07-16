@@ -5,7 +5,7 @@ import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 
 ValueNotifier<List<Recipe>> userRecipeNotifier = ValueNotifier([]);
-
+ValueNotifier<List<Recipe>> userFavRecipeNotifier = ValueNotifier([]);
 
 void addUser({
   required String email,
@@ -38,13 +38,31 @@ void getUser({required id}) async {
   userRecipeNotifier.value.clear();
   final user = userDB.get(id);
   user!.userRecipe?.forEach(
-   (element) {
-     userRecipeNotifier.value.add(element);
-     // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-    userRecipeNotifier.notifyListeners;
-   },
+    (element) {
+      userRecipeNotifier.value.add(element);
+      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+      userRecipeNotifier.notifyListeners;
+    },
   );
-  
+}
+
+void getUserFav({required String id}) async {
+  userFavRecipeNotifier.value.clear();
+  final userDB = await Hive.openBox<User>("user_db");
+
+  final user = userDB.get(id);
+
+  if (user != null && user.favorite != null) {
+    // Use a Set to avoid duplicates
+    final Set<String> seenRecipeIds = {};
+    for (var element in user.favorite!) {
+      if (seenRecipeIds.add(element.id)) {
+        userFavRecipeNotifier.value.add(element);
+      }
+    }
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+    userFavRecipeNotifier.notifyListeners();
+  }
 }
 
 void getAllUSers() async {
@@ -55,7 +73,7 @@ void getAllUSers() async {
   }
 }
 
-void deleteUserRecipe(String id,int index) async {
+void deleteUserRecipe(String id, int index) async {
   final recipeDB = await Hive.openBox<User>("user_db");
   final user = recipeDB.get(id);
   final userRecipe = user!.userRecipe;
@@ -63,4 +81,15 @@ void deleteUserRecipe(String id,int index) async {
   userRecipeNotifier.value.removeAt(index);
   // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
   userRecipeNotifier.notifyListeners;
+}
+
+void deleteUserFavRecipe(String id, int index) async {
+  final users = await Hive.openBox<User>("user_db");
+  final user = users.get(id);
+
+  final userFavRecipe = user!.favorite;
+  userFavRecipe!.removeAt(index);
+  userFavRecipeNotifier.value.removeAt(index);
+  // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+  userFavRecipeNotifier.notifyListeners();
 }

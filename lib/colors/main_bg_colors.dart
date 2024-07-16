@@ -6,3 +6,4 @@ Color fontColor = Colors.white;
 Color editButtonColor = const Color.fromARGB(255, 35, 35, 35);
 Color textFormFieldColor = Colors.grey;
 Color floatActionButtonColor = const Color.fromARGB(255, 70, 70, 70);
+Color favoriteColor = Colors.yellow;

@@ -15,9 +15,10 @@ class User {
   String id;
   @HiveField(4)
   List<Recipe>?userRecipe;
-  
+  @HiveField(5)
+  List<Recipe>?favorite;
 
   
 
-  User({required this.email, required this.username, required this.password,required this.id,this.userRecipe});
+  User({required this.email, required this.username, required this.password,required this.id,this.userRecipe,this.favorite});
 }

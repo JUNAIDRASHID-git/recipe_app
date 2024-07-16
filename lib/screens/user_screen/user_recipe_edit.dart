@@ -149,8 +149,10 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
 
                   final time = int.tryParse(_timeController.text) ?? 0;
 
-                  widget.userData.userRecipe!.remove(widget.recipeData);
-                  List<Recipe> recipeList = [...widget.userData.userRecipe!];
+                  if(widget.userData.userRecipe != null){
+                    widget.userData.userRecipe!.remove(widget.recipeData);
+                  }
+                  List<Recipe> recipeList = [...widget.userData.userRecipe ?? []];
 
                   
                   

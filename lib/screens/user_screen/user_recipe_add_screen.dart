@@ -151,7 +151,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                       veg = selectedItem == "VEG";
                       final time = int.tryParse(_timeController.text) ?? 0;
 
-                      List<Recipe> recipeList = [...widget.userdetails.userRecipe!];
+                      List<Recipe> recipeList = [...widget.userdetails.userRecipe ?? []];
 
                       var recipe = Recipe(
                           image: selectedImage!.path,
