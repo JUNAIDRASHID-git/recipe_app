@@ -28,7 +28,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
     final List<Widget> children = [
       Home(userdetails: widget.userdetails,),
-       FavoriteScreen(userdetails:widget.userdetails ,),
+      FavoriteScreen(userdetails:widget.userdetails ,),
       UserRecipeAddScreen(userdetails: widget.userdetails,),
       const AIScreen(),
     ];

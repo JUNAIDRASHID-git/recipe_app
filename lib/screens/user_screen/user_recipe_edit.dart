@@ -2,11 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
+import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/user_screen/saved_recipes_screeen.dart';
+import 'package:recipe_app/widgets/bars/app_bar.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/widgets/containers/add_image_container.dart';
 import 'package:recipe_app/widgets/formfields/recipe_form.dart';
@@ -55,18 +56,7 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white, size: 35),
-        backgroundColor: Colors.transparent,
-        toolbarHeight: 80,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 55),
-          child: Text(
-            "Add Recipes",
-            style: TextStyle(color: fontColor, fontSize: 30),
-          ),
-        ),
-      ),
+      appBar: appBar('    Edit Recipe'),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -78,9 +68,9 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                 padding: const EdgeInsets.all(15.0),
                 child: FloatingActionButton(
                     backgroundColor: floatActionButtonColor,
-                    child: const Icon(
+                    child: Icon(
                       Icons.add_a_photo_outlined,
-                      color: Colors.white,
+                      color:fontColor,
                     ),
                     onPressed: () async {
                       await imagePicker();
@@ -101,7 +91,7 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                       timeFormField(timeController: _timeController),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: textFormFieldColor,
                           border: Border.all(),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(30)),
@@ -154,8 +144,6 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                   }
                   List<Recipe> recipeList = [...widget.userData.userRecipe ?? []];
 
-                  
-                  
                   var recipe = Recipe(
                       image: selectedImage!.path,
                       title: _titleController.text,
@@ -176,9 +164,6 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                       id: widget.userData.id,
                       userRecipe: recipeList);
 
-                  log("${recipeList.length}");
-
-                  
                   addUserRecipe(id: widget.userData.id, value: userValue);
                   getUser(id: widget.userData.id);
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSavedRecipes(userdetails: userValue)));

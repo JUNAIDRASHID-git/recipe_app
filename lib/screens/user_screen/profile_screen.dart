@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/screens/user_screen/saved_recipes_screeen.dart';
-import 'package:recipe_app/widgets/bottombar/bottom_nav_bar.dart';
+import 'package:recipe_app/widgets/bars/bottom_nav_bar.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/widgets/buttons/sidebarbutton.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
+import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/user_screen/login_screen.dart';
 
@@ -32,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white, size: 35),
+        iconTheme:  IconThemeData(color: fontColor, size: 35),
         backgroundColor: Colors.transparent,
         leading: IconButton(
             onPressed: () {

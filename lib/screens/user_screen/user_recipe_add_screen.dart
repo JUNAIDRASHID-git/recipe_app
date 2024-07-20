@@ -2,11 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
+import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/db/functions/db_functions/recipe_functions.dart';
 import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/db/models/userdb.dart';
+import 'package:recipe_app/widgets/bars/app_bar.dart';
 import 'package:recipe_app/widgets/buttons/user_add_recipe_buttons.dart';
 import 'package:recipe_app/widgets/containers/add_image_container.dart';
 import 'package:recipe_app/widgets/formfields/recipe_form.dart';
@@ -36,19 +37,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mainbgcolor,
-      appBar: AppBar(
-        leading: const Text(""),
-        backgroundColor: Colors.transparent,
-        toolbarHeight: 75,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 10),
-          child: Text(
-            "Add Your Recipe",
-            style:
-                TextStyle(color: fontColor, fontSize: 40, fontFamily: "Oswald"),
-          ),
-        ),
-      ),
+      appBar: appBar('Add Your Recipe'),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -57,9 +46,9 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: FloatingActionButton(
-                    backgroundColor: const Color.fromARGB(255, 81, 81, 81),
-                    child: const Icon(Icons.add_a_photo_outlined,
-                        color: Colors.white),
+                    backgroundColor: floatActionButtonColor,
+                    child:  Icon(Icons.add_a_photo_outlined,
+                        color: fontColor),
                     onPressed: () async {
                       await imagePicker();
                       log("add image button pressed");
@@ -76,10 +65,9 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                       timeFormField(timeController: _timeController),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: textFormFieldColor,
                           border: Border.all(),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(30)),
+                          borderRadius: const BorderRadius.all(Radius.circular(30)),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -88,7 +76,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                                 color: fontColor,
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold),
-                            dropdownColor: Colors.grey,
+                            dropdownColor: textFormFieldColor,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(20)),
                             value: selectedItem,

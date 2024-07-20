@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
+import 'package:recipe_app/colors/colors.dart';
+import 'package:recipe_app/screens/user_screen/fav_recipe_details.dart';
 import 'package:recipe_app/widgets/buttons/edit_delete_button.dart';
 import 'package:recipe_app/db/functions/db_functions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_edit_screen.dart';
-import 'package:recipe_app/screens/home_screen/recipe_details_screen.dart';
 import 'package:recipe_app/widgets/containers/image_widget_container.dart';
 import 'package:recipe_app/widgets/containers/time_widget_container.dart';
 import 'package:recipe_app/widgets/containers/veg_widget_container.dart';
@@ -14,7 +14,7 @@ import 'package:recipe_app/widgets/text_widgets/recipe_title_widget.dart';
 
 class RecipeListAdmin extends StatefulWidget {
   const RecipeListAdmin({super.key});
-
+  
   @override
   State<RecipeListAdmin> createState() => _RecipeListAdminState();
 }
@@ -22,7 +22,7 @@ class RecipeListAdmin extends StatefulWidget {
 class _RecipeListAdminState extends State<RecipeListAdmin> {
   final TextEditingController _searchController = TextEditingController();
   List<Recipe> filteredRecipes = [];
-
+  List<Recipe> favorite = [];
   @override
   void initState() {
     super.initState();
@@ -54,12 +54,12 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: TextField(
                 controller: _searchController,
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                   isDense: true,
-                  fillColor: Color.fromARGB(255, 245, 245, 245),
+                  fillColor: fontColor,
                   filled: true,
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
+                  prefixIcon: const Icon(Icons.search),
+                  border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30))),
                   hintText: 'Search Recipes...',
                 ),
@@ -77,8 +77,7 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => RecipeDetailScreen(
-                            recipedetails: data,
+                          builder: (context) => FavRecipeDetailScreen(recipedetails: data,
                           ),
                         ));
                       },

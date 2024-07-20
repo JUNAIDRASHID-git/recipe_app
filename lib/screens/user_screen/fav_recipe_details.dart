@@ -3,16 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
-import 'package:recipe_app/db/models/userdb.dart';
-import 'package:recipe_app/widgets/buttons/favorite_button.dart';
 import 'package:recipe_app/widgets/containers/time_widget_container.dart';
 import 'package:recipe_app/widgets/containers/veg_widget_container.dart';
 
-class RecipeDetailScreen extends StatelessWidget {
+class FavRecipeDetailScreen extends StatelessWidget {
   final Recipe recipedetails;
-  final User? userdetails;
- final List<Recipe>? favorite;
-  const RecipeDetailScreen({super.key,required this.recipedetails, this.userdetails,this.favorite});
+  const FavRecipeDetailScreen({super.key,required this.recipedetails});
   @override
   Widget build(BuildContext context) {
     
@@ -35,12 +31,6 @@ class RecipeDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-             children: [
-               favButton(data: recipedetails, favorite: favorite!, userData: userdetails!),
-             ],
-           ),
             SizedBox(
               height: 250,
               child: Image.file(File(recipedetails.image)),

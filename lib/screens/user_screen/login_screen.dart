@@ -4,9 +4,9 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/admin_screens/admin_home_screen.dart';
-import 'package:recipe_app/widgets/bottombar/bottom_nav_bar.dart';
+import 'package:recipe_app/widgets/bars/bottom_nav_bar.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
+import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/screens/user_screen/signup_screen.dart';
 import 'package:recipe_app/widgets/textfields/textfield.dart';
 

@@ -1,10 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
+import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/db/models/userdb.dart';
-import 'package:recipe_app/screens/home_screen/recipe_details_screen.dart';
+import 'package:recipe_app/screens/user_screen/fav_recipe_details.dart';
 import 'package:recipe_app/screens/user_screen/profile_screen.dart';
 import 'package:recipe_app/screens/user_screen/user_recipe_edit.dart';
 import 'package:recipe_app/widgets/buttons/edit_delete_button.dart';
@@ -36,7 +36,7 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         toolbarHeight: 70,
-        iconTheme: const IconThemeData(color: Colors.white, size: 35),
+        iconTheme:  IconThemeData(color: fontColor, size: 35),
         leading: IconButton(
             onPressed: () {
               Navigator.push(context,
@@ -69,7 +69,7 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>RecipeDetailScreen(recipedetails: data),
+                                  builder: (context) => FavRecipeDetailScreen(recipedetails: data),
                                 ));
                               },
                               child: Container(
@@ -83,25 +83,14 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                   padding: const EdgeInsets.symmetric(horizontal: 25),
                                   child: Column(
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          RecipeTileWidget(data: data),
-                                          IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                data.fav = !data.fav;
-                                              });
-                                            },
-                                            icon: Icon(
-                                              Icons.star_rounded,
-                                              size: 55,
-                                              color: data.fav == true
-                                                  ? Colors.yellow
-                                                  : Colors.white,
-                                            ),
-                                          ),
-                                        ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10,left: 10),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            RecipeTileWidget(data: data),
+                                          ],
+                                        ),
                                       ),
                                       ImageWidgetContainer(data: data),
                                       Column(

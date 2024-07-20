@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
+import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/widgets/textfields/addrecipe_textfield.dart';
 
 class RecipeFormWidget extends StatefulWidget {

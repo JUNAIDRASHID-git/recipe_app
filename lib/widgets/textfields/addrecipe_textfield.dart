@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
+import 'package:recipe_app/colors/colors.dart';
 
 class TextFieldAddRecipe extends StatefulWidget {
   final TextEditingController controller;

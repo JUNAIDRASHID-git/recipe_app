@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
-import 'package:recipe_app/colors/main_bg_colors.dart';
+import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/home_screen/recipe_details_screen.dart';
+import 'package:recipe_app/screens/user_screen/fav_recipe_details.dart';
+import 'package:recipe_app/widgets/bars/app_bar.dart';
 import 'package:recipe_app/widgets/containers/image_widget_container.dart';
 import 'package:recipe_app/widgets/containers/time_widget_container.dart';
 import 'package:recipe_app/widgets/containers/veg_widget_container.dart';
@@ -32,24 +34,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
       extendBody: true,
       backgroundColor: mainbgcolor,
-      appBar: AppBar(
-        leading: const Text(""),
-        backgroundColor: Colors.transparent,
-        toolbarHeight: 75,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 10),
-          child: Text(
-            "Favorite Recipes",
-            style:
-                TextStyle(color: fontColor, fontSize: 40, fontFamily: "Oswald"),
-          ),
-        ),
-      ),
+      appBar: appBar('Favorite Recipes'),
       body: ValueListenableBuilder(
         valueListenable: userFavRecipeNotifier,
         builder: (context, value, child) {
           return value.isEmpty? Center(
-            child: Text("No Favorite Recipes Data",style: TextStyle(color: fontColor,fontSize: 20),),
+            child: Text("No Favorite Recipes Added",style: TextStyle(color: fontColor,fontSize: 20),),
           ):
           
            Padding(
@@ -62,8 +52,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            RecipeDetailScreen(recipedetails: data),
+                        builder: (context) => FavRecipeDetailScreen(recipedetails: data)
                       ));
                     },
                     child: Container(
