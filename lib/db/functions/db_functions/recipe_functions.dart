@@ -30,9 +30,10 @@ void deleteRecipe(String id) async {
   getAllRecipes();
 }
 
-Future<void> updateRecipe(Recipe value) async {
+Future<void> updateRecipe(Recipe value,String id) async {
   final recipeDB = await Hive.openBox<Recipe>("recipe_db");
   final newRecipe = value;
-  await recipeDB.put(newRecipe.id, newRecipe);
+  await recipeDB.put(id, newRecipe);
   getAllRecipes();
 }
+

@@ -32,6 +32,7 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   final List<String> _ingredianceController = [];
+  List<TextEditingController> ingredientsController = [TextEditingController()];
   TextEditingController _instructionController = TextEditingController();
   bool veg = true;
   File? selectedImage;
@@ -43,14 +44,14 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
     userRecipeNotifier;
     super.initState();
     selectedImage = File(widget.recipeData.image);
-    _timeController =
-        TextEditingController(text: widget.recipeData.time.toString());
+    _timeController = TextEditingController(text: widget.recipeData.time.toString());
     _titleController = TextEditingController(text: widget.recipeData.title);
-    _descriptionController =
-        TextEditingController(text: widget.recipeData.description);
+    _descriptionController = TextEditingController(text: widget.recipeData.description);
     // incrediance
-    _instructionController =
-        TextEditingController(text: widget.recipeData.instruction);
+    for (var ingredient in widget.recipeData.ingrediants) {
+      ingredientsController.add(TextEditingController(text: ingredient));
+    }
+    _instructionController = TextEditingController(text: widget.recipeData.instruction);
   }
 
   @override
@@ -103,7 +104,7 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                                 color: fontColor,
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold),
-                            dropdownColor: Colors.grey,
+                            dropdownColor: textFormFieldColor,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(20)),
                             value: selectedItem,
@@ -126,7 +127,7 @@ class _UserEditScreenState extends State<UserRecipeEditScreen> {
                     titleController: _titleController,
                     descriptionController: _descriptionController,
                     instructionController: _instructionController,
-                    ingredientsList: _ingredianceController,
+                    ingredientsList: _ingredianceController, ingredientsController: ingredientsController,
                   )
                 ],
               ),

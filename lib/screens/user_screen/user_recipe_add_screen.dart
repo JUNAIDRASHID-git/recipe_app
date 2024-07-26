@@ -8,6 +8,7 @@ import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/widgets/bars/app_bar.dart';
+import 'package:recipe_app/widgets/buttons/drop_down_button.dart';
 import 'package:recipe_app/widgets/buttons/user_add_recipe_buttons.dart';
 import 'package:recipe_app/widgets/containers/add_image_container.dart';
 import 'package:recipe_app/widgets/formfields/recipe_form.dart';
@@ -26,12 +27,15 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final List<String> _ingredianceController = [];
+  List<TextEditingController> ingredientsController = [TextEditingController()];
   final _instructionController = TextEditingController();
   bool veg = true;
   File? selectedImage;
   Widget sizedBox = const SizedBox(height: 10);
   List<String> isveg = ["VEG", "NON-VEG"];
   String selectedItem = "VEG";
+ List<String> dishType = ["North Indian", "South Indian", "Arabic","Chinese","Kerala"];
+  String selectedDishType = "North Indian";
 
   @override
   Widget build(BuildContext context) {
@@ -63,35 +67,12 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       timeFormField(timeController: _timeController),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: textFormFieldColor,
-                          border: Border.all(),
-                          borderRadius: const BorderRadius.all(Radius.circular(30)),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: DropdownButton<String>(
-                            style: TextStyle(
-                                color: fontColor,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold),
-                            dropdownColor: textFormFieldColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20)),
-                            value: selectedItem,
-                            items: isveg.map((value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (value) =>
-                                setState(() => selectedItem = value!),
-                            underline: const SizedBox.shrink(),
-                          ),
-                        ),
-                      ),
+                      dropdownButton(isveg, selectedItem, (value) {
+                        setState(() => selectedItem = value!);
+                      },),
+                      dropdownButton(dishType, selectedDishType, (value) {
+                        setState(() => selectedDishType = value!);
+                      },),
                     ],
                   ),
                   sizedBox,
@@ -99,7 +80,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                     titleController: _titleController,
                     descriptionController: _descriptionController,
                     instructionController: _instructionController,
-                    ingredientsList:_ingredianceController,
+                    ingredientsList:_ingredianceController, ingredientsController: ingredientsController,
                   )
                 ],
               ),
@@ -125,6 +106,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                         ingrediants:_ingredianceController,
                         id: DateTime.now().millisecondsSinceEpoch.toString(),
                         veg: veg,
+                        dishType: selectedDishType,
                         fav: false,
                       );
                       addRecipe(value);
@@ -133,8 +115,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                       log("Publish pressed");
                     },
                   ),
-                  UserAddRecipeButton(
-                    buttonTitle: "SAVE",
+                  UserAddRecipeButton(buttonTitle: "SAVE",
                     buttonAction: () {
                       veg = selectedItem == "VEG";
                       final time = int.tryParse(_timeController.text) ?? 0;
@@ -150,6 +131,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                           instruction: _instructionController.text,
                           id: DateTime.now().millisecondsSinceEpoch.toString(),
                           veg: veg,
+                          dishType: selectedDishType,
                           fav: false);
 
                       recipeList.add(recipe);
@@ -164,9 +146,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                       addUserRecipe(id: widget.userdetails.id, value: userValue);
                       log("${userValue.userRecipe}");
                       log("save draft pressed");
-                      setState(() {
                         clearField();
-                      });
                     },
                   ),
                 ],

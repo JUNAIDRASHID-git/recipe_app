@@ -127,8 +127,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       onTap: () {
                         log("Already have an Account pressed");
                         Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()),
+                            MaterialPageRoute(builder: (context) => const LoginScreen()),
                             (route) => false);
                       },
                       child:  Text(

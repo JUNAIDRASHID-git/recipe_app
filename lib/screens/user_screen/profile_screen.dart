@@ -63,9 +63,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
                   height: 150,
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                  decoration:  BoxDecoration(
+                    color: textFormFieldColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
                   ),
                   child: Row(
                     children: [

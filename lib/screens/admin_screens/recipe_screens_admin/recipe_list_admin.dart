@@ -142,7 +142,7 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                                         );
                                       },
                                       buttonTitle: "DELETE",
-                                      color: const Color.fromARGB( 255, 180, 67, 59),
+                                      color: deleteButtonColor,
                                       fontSize: 20),
                                 ],
                               ),

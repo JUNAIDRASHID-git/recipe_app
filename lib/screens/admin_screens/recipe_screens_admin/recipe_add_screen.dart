@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/colors/colors.dart';
+import 'package:recipe_app/widgets/buttons/add_image_button.dart';
+import 'package:recipe_app/widgets/buttons/drop_down_button.dart';
 import 'package:recipe_app/widgets/buttons/mainbutton.dart';
 import 'package:recipe_app/db/functions/db_functions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
@@ -22,6 +24,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final List<String> _ingredianceController = [];
+  List<TextEditingController> ingredientsController = [TextEditingController()];
   final _instructionController = TextEditingController();
   bool veg = true;
   File? selectedImage;
@@ -31,7 +34,14 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
 
   List<String> isveg = ["VEG", "NON-VEG"];
   String selectedItem = "VEG";
-
+  List<String> dishType = [
+    "North Indian",
+    "South Indian",
+    "Arabic",
+    "Chinese",
+    "Kerala"
+  ];
+  String selectedDishType = "North Indian";
 
   @override
   void initState() {
@@ -39,20 +49,18 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
     _ingredianceController.clear();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white, size: 35),
+        iconTheme: IconThemeData(color: fontColor, size: 35),
         backgroundColor: Colors.transparent,
         toolbarHeight: 80,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 55),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 55),
           child: Text(
             "Add Recipes",
-            style: TextStyle(color: Colors.white, fontSize: 30),
+            style: TextStyle(color: fontColor, fontSize: 30),
           ),
         ),
       ),
@@ -63,19 +71,10 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
               AddImageContainer(
                 selectedImage: selectedImage,
               ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: FloatingActionButton(
-                    backgroundColor: floatActionButtonColor,
-                    child: const Icon(
-                      Icons.add_a_photo_outlined,
-                      color: Colors.white,
-                    ),
-                    onPressed: () async {
-                      await imagePicker();
-                      log("add image button pressed");
-                    }),
-              )
+              addImageButton(() async {
+                await imagePicker();
+                log("add image button pressed");
+              })
             ]),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -88,35 +87,19 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       timeFormField(timeController: _timeController),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          border: Border.all(),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(30)),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: DropdownButton<String>(
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold),
-                            dropdownColor: Colors.grey,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20)),
-                            value: selectedItem,
-                            items: isveg.map((value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (value) =>
-                                setState(() => selectedItem = value!),
-                            underline: const SizedBox.shrink(),
-                          ),
-                        ),
+                      dropdownButton(
+                        isveg,
+                        selectedItem,
+                        (value) {
+                          setState(() => selectedItem = value!);
+                        },
+                      ),
+                      dropdownButton(
+                        dishType,
+                        selectedDishType,
+                        (value) {
+                          setState(() => selectedDishType = value!);
+                        },
                       ),
                     ],
                   ),
@@ -126,6 +109,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                     descriptionController: _descriptionController,
                     instructionController: _instructionController,
                     ingredientsList: _ingredianceController,
+                    ingredientsController: ingredientsController,
                   ),
                 ],
               ),
@@ -148,8 +132,6 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                   veg = selectedItem == "VEG";
                   final time = int.tryParse(_timeController.text) ?? 0;
 
-                  
-
                   var value = Recipe(
                       image: selectedImage!.path,
                       title: _titleController.text,
@@ -159,6 +141,7 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                       instruction: _instructionController.text,
                       veg: veg,
                       id: DateTime.now().millisecondsSinceEpoch.toString(),
+                      dishType: selectedDishType,
                       fav: false);
 
                   addRecipe(value);

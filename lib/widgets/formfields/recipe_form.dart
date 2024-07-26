@@ -4,18 +4,19 @@ import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/widgets/textfields/addrecipe_textfield.dart';
 
 class RecipeFormWidget extends StatefulWidget {
-  const RecipeFormWidget({
+   const RecipeFormWidget({
     super.key,
     required this.titleController,
     required this.descriptionController,
     required this.instructionController,
-    required this.ingredientsList,
+    required this.ingredientsList, required this.ingredientsController,
   });
 
   final TextEditingController titleController;
   final TextEditingController descriptionController;
   final List<String> ingredientsList;
   final TextEditingController instructionController;
+  final List<TextEditingController> ingredientsController;
 
   @override
   State<RecipeFormWidget> createState() => _RecipeFormWidgetState();
@@ -23,11 +24,18 @@ class RecipeFormWidget extends StatefulWidget {
 
 class _RecipeFormWidgetState extends State<RecipeFormWidget> {
   Widget sizedBox = const SizedBox(height: 10);
-  List<TextEditingController> ingredientsController = [TextEditingController()];
   double height = 69;
-
+@override
+  void initState() {
+    
+    super.initState();
+    if(widget.ingredientsController.length>1){
+      height = widget.ingredientsController.length * 79;
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    log("${widget.ingredientsController.length}");
     return Column(
       children: [
         TextFieldAddRecipe(
@@ -46,10 +54,10 @@ class _RecipeFormWidgetState extends State<RecipeFormWidget> {
           height: height,
           child: ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: ingredientsController.length,
+            itemCount: widget.ingredientsController.length,
             itemBuilder: (context, index) {
               return TextFormField(
-                controller: ingredientsController[index],
+                controller: widget.ingredientsController[index],
                 style: TextStyle(color: fontColor, fontSize: 20),
                 decoration: InputDecoration(
                   fillColor: textFormFieldColor,
@@ -58,13 +66,13 @@ class _RecipeFormWidgetState extends State<RecipeFormWidget> {
                       onTap: () {
                         
                         setState(() {
-                          if (ingredientsController.length>1) {
-                            ingredientsController[index].clear();
-                            widget.ingredientsList.remove(ingredientsController[index].text);
-                            ingredientsController.removeAt(index);
+                          if (widget.ingredientsController.length>1) {
+                           widget. ingredientsController[index].clear();
+                            widget.ingredientsList.remove(widget.ingredientsController[index].text);
+                            widget.ingredientsController.removeAt(index);
                             height = height - 80;
                           }else{
-                            ingredientsController[index].clear();
+                            widget.ingredientsController[index].clear();
                           }
                           
                         });
@@ -86,11 +94,11 @@ class _RecipeFormWidgetState extends State<RecipeFormWidget> {
                             WidgetStatePropertyAll(floatActionButtonColor),
                       ),
                       onPressed: () {
-                        ingredientsController.add(TextEditingController());
-                        if (ingredientsController[index].text.isNotEmpty) {
-                          widget.ingredientsList.add(ingredientsController[index].text);
+                       widget.ingredientsController.add(TextEditingController());
+                        if (widget.ingredientsController[index].text.isNotEmpty) {
+                          widget.ingredientsList.add(widget.ingredientsController[index].text);
                         }
-                        log('${ingredientsController.length}');
+                        log('${widget.ingredientsController.length}');
                         log('${widget.ingredientsList.length}');
                         setState(() {
                           height = height + 80;

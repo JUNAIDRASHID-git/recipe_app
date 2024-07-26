@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/db/functions/db_functions/recipe_functions.dart';
 import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_add_screen.dart';
 import 'package:recipe_app/screens/admin_screens/recipe_screens_admin/recipe_list_admin.dart';
@@ -39,14 +40,14 @@ class _AdminRecipeScreenState extends State<AdminRecipeScreen> {
           ),
         ),
         appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.white, size: 35),
+          iconTheme:  IconThemeData(color: fontColor, size: 35),
           toolbarHeight: 80,
           backgroundColor: Colors.transparent,
-          title: const Padding(
-            padding: EdgeInsets.only(left: 83),
+          title:  Padding(
+            padding:const EdgeInsets.only(left: 83),
             child: Text(
               "Recipes",
-              style: TextStyle(color: Colors.white, fontSize: 30),
+              style: TextStyle(color: fontColor, fontSize: 30),
             ),
           ),
         ),

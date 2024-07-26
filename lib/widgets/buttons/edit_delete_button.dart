@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/colors/colors.dart';
 
 class DeleteEditButton extends StatelessWidget {
   final Function() buttonAction;
@@ -28,7 +29,7 @@ class DeleteEditButton extends StatelessWidget {
           child: Center(
             child: Text(
               buttonTitle,
-              style: TextStyle(color: Colors.white, fontSize: fontSize),
+              style: TextStyle(color: fontColor, fontSize: fontSize),
             ),
           ),
         ),

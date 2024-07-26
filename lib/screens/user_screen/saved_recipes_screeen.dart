@@ -36,11 +36,13 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         toolbarHeight: 70,
-        iconTheme:  IconThemeData(color: fontColor, size: 35),
+        iconTheme: IconThemeData(color: fontColor, size: 35),
         leading: IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>ProfileScreen(userdetails: widget.userdetails)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProfileScreen(userdetails: widget.userdetails)));
             },
             icon: const Icon(Icons.arrow_back)),
         title: const Padding(
@@ -49,7 +51,8 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
       ),
       body: ValueListenableBuilder(
         valueListenable: userRecipeNotifier,
-        builder:(BuildContext context, List<Recipe> userRecipeList, Widget? child) {
+        builder:
+            (BuildContext context, List<Recipe> userRecipeList, Widget? child) {
           return userRecipeList.isEmpty
               ? Center(
                   child: Text(
@@ -75,18 +78,16 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: recipeContainerColor,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(40)),
-                                ),
+                                  borderRadius: const BorderRadius.all(Radius.circular(40)),),
                                 width: 80,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 25),
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(top: 10,left: 10),
+                                        padding: const EdgeInsets.only(top: 10, left: 10),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          mainAxisAlignment:MainAxisAlignment.start,
                                           children: [
                                             RecipeTileWidget(data: data),
                                           ],
@@ -97,9 +98,10 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                         crossAxisAlignment:CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
                                             child: Row(
-                                              mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 VegWidgetContainer(data: data),
                                                 TimeWidgetContainer(data: data),
@@ -107,25 +109,24 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                                            child: RecipeDescriptionWidget(data: data),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 5),
+                                            child: RecipeDescriptionWidget(
+                                                data: data),
                                           ),
                                           DeleteEditButton(
-                                            buttonAction: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>UserRecipeEditScreen(
-                                                    recipeData: data,
-                                                    userData:widget.userdetails,
-                                                    index: index,
+                                              buttonAction: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserRecipeEditScreen(recipeData: data,userData:widget.userdetails,index: index),
                                                   ),
-                                                ),
-                                              );
-                                            },
-                                            buttonTitle: 'EDIT',
-                                            color: editButtonColor,
-                                            fontSize: 20),
+                                                );
+                                              },
+                                              buttonTitle: 'EDIT',
+                                              color: editButtonColor,
+                                              fontSize: 20),
                                           DeleteEditButton(
                                             buttonAction: () {
                                               showDialog(
@@ -139,18 +140,16 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                                                         log("delete pressed");
                                                         Navigator.pop(context);
                                                       },
-                                                      messageText:"Do you want to Delete?");
+                                                      messageText:
+                                                          "Do you want to Delete?");
                                                 },
                                               );
                                             },
                                             buttonTitle: 'DELETE',
-                                            color: const Color.fromARGB(
-                                                255, 151, 36, 36),
+                                            color: deleteButtonColor,
                                             fontSize: 20,
                                           ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
+                                          const SizedBox(height: 10),
                                         ],
                                       ),
                                     ],
@@ -160,7 +159,8 @@ class _UserSavedRecipesState extends State<UserSavedRecipes> {
                             ),
                           );
                         },
-                        separatorBuilder: (context, index) =>const SizedBox(height: 20),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 20),
                         itemCount: userRecipeList.length,
                       ),
                     ),

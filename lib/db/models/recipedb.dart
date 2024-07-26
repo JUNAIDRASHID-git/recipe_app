@@ -21,6 +21,8 @@ class Recipe {
   bool fav;
   @HiveField(8)
   String id;
+  @HiveField(9)
+  String? dishType;
 
   Recipe(
       {required this.image,
@@ -31,5 +33,6 @@ class Recipe {
       required this.instruction,
       required this.id,
       required this.veg,
-      required this.fav});
+      required this.fav,
+      this.dishType});
 }
