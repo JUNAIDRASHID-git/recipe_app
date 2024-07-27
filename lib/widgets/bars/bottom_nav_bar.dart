@@ -27,10 +27,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
     final ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
 
     final List<Widget> children = [
+      const AIScreen(),
       Home(userdetails: widget.userdetails,),
       FavoriteScreen(userdetails:widget.userdetails ,),
       UserRecipeAddScreen(userdetails: widget.userdetails,),
-      const AIScreen(),
     ];
 
     return Scaffold(

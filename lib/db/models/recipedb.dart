@@ -35,4 +35,12 @@ class Recipe {
       required this.veg,
       required this.fav,
       this.dishType});
+
+  get yield => null;
+
+  get prepTime => null;
+
+  get cookTime => null;
+
+  get tips => null;
 }

@@ -20,8 +20,8 @@ void main() async {
   }
   await Hive.openBox<User>("user_db");
   await Hive.openBox<Recipe>("recipe_db");
-  
 
+  
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: mainbgcolor, systemNavigationBarColor: mainbgcolor));
   runApp(const MyApp());

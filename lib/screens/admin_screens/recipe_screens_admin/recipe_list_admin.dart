@@ -11,10 +11,11 @@ import 'package:recipe_app/widgets/containers/veg_widget_container.dart';
 import 'package:recipe_app/widgets/dialog_widgets/dialog_message_widget.dart';
 import 'package:recipe_app/widgets/text_widgets/recipe_description_widget.dart';
 import 'package:recipe_app/widgets/text_widgets/recipe_title_widget.dart';
+import 'package:recipe_app/widgets/textfields/searchfield.dart';
 
 class RecipeListAdmin extends StatefulWidget {
   const RecipeListAdmin({super.key});
-  
+
   @override
   State<RecipeListAdmin> createState() => _RecipeListAdminState();
 }
@@ -44,124 +45,102 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
     return ValueListenableBuilder(
       valueListenable: recipeNotifier,
       builder: (BuildContext context, List<Recipe> recipeList, Widget? child) {
-        filteredRecipes = filteredRecipes.isEmpty && _searchController.text.isEmpty ? recipeList: filteredRecipes;
+        filteredRecipes =
+            filteredRecipes.isEmpty && _searchController.text.isEmpty
+                ? recipeList
+                : filteredRecipes;
         return Column(
           children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: TextField(
-                controller: _searchController,
-                decoration:  InputDecoration(
-                  isDense: true,
-                  fillColor: fontColor,
-                  filled: true,
-                  prefixIcon: const Icon(Icons.search),
-                  border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30))),
-                  hintText: 'Search Recipes...',
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            filteredRecipes.isNotEmpty ? Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  final data = filteredRecipes[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => FavRecipeDetailScreen(recipedetails: data,
-                          ),
-                        ));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: recipeContainerColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(40))),
-                        width: 80,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 5,
+            const SizedBox(height: 10),
+            searchTextField(_searchController),
+            const SizedBox(height: 30),
+            filteredRecipes.isNotEmpty
+                ? Expanded(
+                    child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          final data = filteredRecipes[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => FavRecipeDetailScreen(recipedetails: data),
+                                ));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: recipeContainerColor,
+                                    borderRadius: const BorderRadius.all(Radius.circular(40))),
+                                width: 80,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 5),
+                                      RecipeTileWidget(data: data),
+                                      ImageWidgetContainer(data: data),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric( horizontal: 10),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                VegWidgetContainer(data: data),
+                                                TimeWidgetContainer(data: data)
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                              padding:const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                              child: RecipeDescriptionWidget(data: data)),
+                                          const SizedBox(height: 10),
+                                          DeleteEditButton(
+                                              buttonAction: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => UpdateRecipeadmin(recipeData:data)));
+                                              },
+                                              buttonTitle: "EDIT",
+                                              color: editButtonColor,
+                                              fontSize: 20),
+                                          DeleteEditButton(
+                                              buttonAction: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return DialogMessageWidget(
+                                                        yesAction: () {
+                                                          deleteRecipe(data.id);
+                                                          Navigator.pop(context);
+                                                        },
+                                                        messageText:'Do You Want to delete ${data.title}');
+                                                  },
+                                                );
+                                              },
+                                              buttonTitle: "DELETE",
+                                              color: deleteButtonColor,
+                                              fontSize: 20)
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                              RecipeTileWidget(data: data),
-                              ImageWidgetContainer(data: data),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        VegWidgetContainer(data: data),
-                                        TimeWidgetContainer(data: data)
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                    child: RecipeDescriptionWidget(data: data)
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  DeleteEditButton(
-                                      buttonAction: () {
-                                        Navigator.push(context,MaterialPageRoute(builder: (context) =>UpdateRecipeadmin(recipeData: data)));
-                                      },
-                                      buttonTitle: "EDIT",
-                                      color:const Color.fromARGB(255, 62, 62, 62),
-                                      fontSize: 20),
-                                  DeleteEditButton(
-                                      buttonAction: () {
-                                        showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                         return DialogMessageWidget(
-                                           
-                                            yesAction: () {  
-                                              deleteRecipe(data.id);
-                                              Navigator.pop(context);
-                                            }, 
-                                            messageText: 'Do You Want to delete ${data.title}',);
-                                          },
-                                        );
-                                      },
-                                      buttonTitle: "DELETE",
-                                      color: deleteButtonColor,
-                                      fontSize: 20),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 20,
-                ),
-                itemCount: filteredRecipes.length,
-              ),
-            ) :  Padding(
-              padding: const EdgeInsets.only(top: 250),
-              child: Text("No Data Found",style: TextStyle(color: fontColor,fontSize: 30),),
-            )
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(height: 20),
+                        itemCount: filteredRecipes.length),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(top: 250),
+                    child: Text("No Data Found",
+                        style: TextStyle(color: fontColor, fontSize: 30)),
+                  )
           ],
         );
       },
