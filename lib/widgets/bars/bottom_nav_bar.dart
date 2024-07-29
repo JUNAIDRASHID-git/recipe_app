@@ -31,6 +31,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       Home(userdetails: widget.userdetails,),
       FavoriteScreen(userdetails:widget.userdetails ,),
       UserRecipeAddScreen(userdetails: widget.userdetails,),
+      
     ];
 
     return Scaffold(

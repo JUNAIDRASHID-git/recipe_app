@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:recipe_app/db/models/response_model.dart';
 
 Future<String> sendRequest(String ingredients) async {
-  const apiKey = 'AIzaSyBU54wLc8iTtXKp8omRMajzp3ezstx6Oyc'; // Replace with your actual API key
+  const apiKey = 'AIzaSyBU54wLc8iTtXKp8omRMajzp3ezstx6Oyc';
   const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$apiKey';
 
   final payload = jsonEncode({
@@ -95,11 +95,13 @@ RecipeModel parseRecipe(String content) {
     } else if (line.isNotEmpty) {
       switch (currentSection) {
         case 'ingredients':
-          ingredients.add(line);
-          log('Added to ingredients: $line');
+          var cleanedLine = line.replaceFirst(RegExp(r'^\d+\.\s*'), '');
+          cleanedLine = cleanedLine.replaceAll(RegExp(r'\*+'), '');
+          if (cleanedLine.isNotEmpty) {
+            ingredients.add(cleanedLine.trim());
+          }
           break;
         case 'instructions':
-          // Remove numbering and asterisks
           var cleanedLine = line.replaceFirst(RegExp(r'^\d+\.\s*'), '');
           cleanedLine = cleanedLine.replaceAll(RegExp(r'\*+'), '');
           if (cleanedLine.isNotEmpty) {
@@ -107,8 +109,11 @@ RecipeModel parseRecipe(String content) {
           }
           break;
         case 'tips':
-          tips.add(line);
-          log('Added to tips: $line');
+          var cleanedLine = line.replaceFirst(RegExp(r'^\d+\.\s*'), '');
+          cleanedLine = cleanedLine.replaceAll(RegExp(r'\*+'), '');
+          if (cleanedLine.isNotEmpty) {
+            tips.add(cleanedLine.trim());
+          }
           break;
           
       }
