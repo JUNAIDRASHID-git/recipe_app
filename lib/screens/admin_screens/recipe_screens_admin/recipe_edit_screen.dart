@@ -94,11 +94,7 @@ class _UpdateRecipeAdminState extends State<UpdateRecipeadmin> {
                           setState(() => selectedItem = value!);
                         },
                       ),
-                      dropdownButton(dishType, selectedDishType, (value) {
-                        setState(() {
-                          selectedDishType = value!;
-                        });
-                      })
+                      
                     ],
                   ),
                   const SizedBox(height: 10),

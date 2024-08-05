@@ -34,8 +34,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
   Widget sizedBox = const SizedBox(height: 10);
   List<String> isveg = ["VEG", "NON-VEG"];
   String selectedItem = "VEG";
- List<String> dishType = ["North Indian", "South Indian", "Arabic","Chinese","Kerala"];
-  String selectedDishType = "North Indian";
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +69,6 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                       dropdownButton(isveg, selectedItem, (value) {
                         setState(() => selectedItem = value!);
                       },),
-                      dropdownButton(dishType, selectedDishType, (value) {
-                        setState(() => selectedDishType = value!);
-                      },),
                     ],
                   ),
                   sizedBox,
@@ -106,7 +102,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                         ingrediants:_ingredianceController,
                         id: DateTime.now().millisecondsSinceEpoch.toString(),
                         veg: veg,
-                        dishType: selectedDishType,
+                        dishType: '',
                         fav: false,
                       );
                       addRecipe(value);
@@ -131,7 +127,7 @@ class _UserRecipeAddScreenState extends State<UserRecipeAddScreen> {
                           instruction: _instructionController.text,
                           id: DateTime.now().millisecondsSinceEpoch.toString(),
                           veg: veg,
-                          dishType: selectedDishType,
+                          dishType: '',
                           fav: false);
 
                       recipeList.add(recipe);

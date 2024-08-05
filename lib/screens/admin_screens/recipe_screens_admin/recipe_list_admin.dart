@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/colors/colors.dart';
 import 'package:recipe_app/screens/user_screen/fav_recipe_details.dart';
+import 'package:recipe_app/widgets/buttons/catogirize_button.dart';
 import 'package:recipe_app/widgets/buttons/edit_delete_button.dart';
 import 'package:recipe_app/db/functions/db_functions/recipe_functions.dart';
 import 'package:recipe_app/db/models/recipedb.dart';
@@ -24,6 +25,7 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
   final TextEditingController _searchController = TextEditingController();
   List<Recipe> filteredRecipes = [];
   List<Recipe> favorite = [];
+  bool? veg = false;
   @override
   void initState() {
     super.initState();
@@ -53,7 +55,7 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
           children: [
             const SizedBox(height: 10),
             searchTextField(_searchController),
-            const SizedBox(height: 30),
+            const SizedBox(height: 15),
             filteredRecipes.isNotEmpty
                 ? Expanded(
                     child: ListView.separated(
@@ -64,29 +66,38 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => FavRecipeDetailScreen(recipedetails: data),
+                                  builder: (context) => FavRecipeDetailScreen(
+                                      recipedetails: data),
                                 ));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                     color: recipeContainerColor,
-                                    borderRadius: const BorderRadius.all(Radius.circular(40))),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(40))),
                                 width: 80,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 25),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      const SizedBox(height: 5),
+                                      const SizedBox(height: 10),
                                       RecipeTileWidget(data: data),
+                                      catogorizeButton(context,data),
                                       ImageWidgetContainer(data: data),
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.symmetric( horizontal: 10),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 VegWidgetContainer(data: data),
                                                 TimeWidgetContainer(data: data)
@@ -94,15 +105,22 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                                             ),
                                           ),
                                           Padding(
-                                              padding:const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                              child: RecipeDescriptionWidget(data: data)),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 5),
+                                              child: RecipeDescriptionWidget(
+                                                  data: data)),
                                           const SizedBox(height: 10),
                                           DeleteEditButton(
                                               buttonAction: () {
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => UpdateRecipeadmin(recipeData:data)));
+                                                        builder: (context) =>
+                                                            UpdateRecipeadmin(
+                                                                recipeData:
+                                                                    data)));
                                               },
                                               buttonTitle: "EDIT",
                                               color: editButtonColor,
@@ -115,9 +133,11 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                                                     return DialogMessageWidget(
                                                         yesAction: () {
                                                           deleteRecipe(data.id);
-                                                          Navigator.pop(context);
+                                                          Navigator.pop(
+                                                              context);
                                                         },
-                                                        messageText:'Do You Want to delete ${data.title}');
+                                                        messageText:
+                                                            'Do You Want to delete ${data.title}');
                                                   },
                                                 );
                                               },
@@ -133,7 +153,8 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
                             ),
                           );
                         },
-                        separatorBuilder: (context, index) => const SizedBox(height: 20),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 20),
                         itemCount: filteredRecipes.length),
                   )
                 : Padding(
@@ -146,4 +167,6 @@ class _RecipeListAdminState extends State<RecipeListAdmin> {
       },
     );
   }
+
+  
 }

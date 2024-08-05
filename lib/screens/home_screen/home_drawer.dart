@@ -1,7 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:recipe_app/colors/colors.dart';
+import 'package:recipe_app/screens/home_screen/settings_screen.dart';
+import 'package:recipe_app/widgets/about.dart';
 import 'package:recipe_app/widgets/buttons/sidebarbutton.dart';
 import 'package:recipe_app/db/models/userdb.dart';
 import 'package:recipe_app/screens/user_screen/profile_screen.dart';
@@ -49,7 +50,11 @@ class HomeDrawer extends StatelessWidget {
               child: SidebarButtons(
                 text: "Settings",
                 action: () {
-                  log("Settings Cilcked");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SettingsScreen(),
+                      ));
                 },
               )),
           Padding(
@@ -57,7 +62,33 @@ class HomeDrawer extends StatelessWidget {
               child: SidebarButtons(
                 text: "About",
                 action: () {
-                  log("About Cilcked");
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return  Dialog(
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10,right: 10),
+                                child: SingleChildScrollView(
+                                  child: Text(about,style:const TextStyle(fontSize: 15),),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(onPressed: (){
+                                    Navigator.pop(context);
+                                }, child: const Text("Close"))
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  );
                 },
               )),
         ],

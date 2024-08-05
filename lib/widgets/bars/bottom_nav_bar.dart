@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/db/functions/db_functions/userfunctions.dart';
 import 'package:recipe_app/db/models/userdb.dart';
@@ -6,6 +5,7 @@ import 'package:recipe_app/screens/home_screen/ai_screen.dart';
 import 'package:recipe_app/screens/user_screen/favorite_screen.dart';
 import 'package:recipe_app/screens/home_screen/home_screen.dart';
 import 'package:recipe_app/screens/user_screen/user_recipe_add_screen.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key, required this.userdetails});
@@ -16,6 +16,8 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  final ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
+
   @override
   void initState() {
     super.initState();
@@ -24,45 +26,58 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
-
     final List<Widget> children = [
+      Home(userdetails: widget.userdetails),
+      FavoriteScreen(userdetails: widget.userdetails),
+      UserRecipeAddScreen(userdetails: widget.userdetails),
       const AIScreen(),
-      Home(userdetails: widget.userdetails,),
-      FavoriteScreen(userdetails:widget.userdetails ,),
-      UserRecipeAddScreen(userdetails: widget.userdetails,),
-      
     ];
 
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.transparent,
-      body: ValueListenableBuilder(
-        valueListenable: currentIndex,
+      body: ValueListenableBuilder<int>(
+        valueListenable: _currentIndex,
         builder: (context, currentIndex, _) {
           return children[currentIndex];
         },
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        animationDuration: const Duration(milliseconds: 300),
-        buttonBackgroundColor: const Color.fromARGB(255, 101, 101, 101),
-        backgroundColor: Colors.transparent,
-        color: const Color.fromARGB(255, 101, 101, 101),
-        height: 60,
-        index: currentIndex.value,
-        onTap: (index) {
-          currentIndex.value = index;
+      bottomNavigationBar: ValueListenableBuilder<int>(
+        valueListenable: _currentIndex,
+        builder: (context, currentIndex, _) {
+          return SalomonBottomBar(
+            backgroundColor: Colors.grey,
+            currentIndex: currentIndex,
+            onTap: (index) {
+              _currentIndex.value = index;
+            },
+            items: [
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.home),
+                title: const Text("Home"),
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.favorite),
+                title: const Text("Favorite"),
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.notes),
+                title: const Text("Add Recipe"),
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.stream),
+                title: const Text("AI Chef"),
+              ),
+            ],
+          );
         },
-        items: const <Widget>[
-          Icon(Icons.home_filled, size: 30),
-          Icon(Icons.favorite, size: 30),
-          ImageIcon(
-            AssetImage("assets/logos/menu.png"),
-            size: 33,
-          ),
-          ImageIcon(AssetImage("assets/logos/ai.png"))
-        ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _currentIndex.dispose();
+    super.dispose();
   }
 }

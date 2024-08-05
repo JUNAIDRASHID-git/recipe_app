@@ -39,7 +39,21 @@ class _AIScreenState extends State<AIScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: aiAppBar(),
+      appBar: aiAppBar(() {
+        setState(() {
+        ingredientsList.clear();
+        responseTxt = "";
+        });
+      aiRecipe.value= RecipeModel(
+    name: '',
+    yield: '',
+    prepTime: '',
+    cookTime: '',
+    ingredients: [],
+    instructions: [],
+    tips: [],
+  );
+      },),
       extendBody: true,
       body: SingleChildScrollView(
         child: Column(

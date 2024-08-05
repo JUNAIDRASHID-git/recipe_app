@@ -33,6 +33,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.1.0
+  flutter_markdown: ^0.7.3
   google_nav_bar: ^5.0.6
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -76,6 +77,8 @@ flutter:
     - assets/recipe_pngs/FrenchFries.png
     - assets/recipe_pngs/pizza (3).png
     - assets/recipe_pngs/Samosa.png
+    - assets/Privacy_Policy/privacy_policy.md
+    - assets/Terms_and_Conditins/Terms_and_Conditions.md
     - .env
     
   # An image asset can refer to one or more resolution-specific "variants", see
