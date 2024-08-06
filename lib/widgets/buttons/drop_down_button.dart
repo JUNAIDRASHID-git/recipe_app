@@ -11,7 +11,7 @@ Container dropdownButton(List<String> isveg, String selectedItem,
       borderRadius: const BorderRadius.all(Radius.circular(30)),
     ),
     child: Padding(
-      padding: const EdgeInsets.only(left: 10,top: 5),
+      padding: const EdgeInsets.only(left: 10,top: 5,bottom: 5),
       child: DropdownButton<String>(
           underline: const SizedBox.shrink(),
           style: TextStyle(

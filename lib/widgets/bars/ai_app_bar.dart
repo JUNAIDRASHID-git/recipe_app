@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/colors/colors.dart';
+import 'package:recipe_app/db/models/response_model.dart';
 
-AppBar aiAppBar(void Function()? onPressed) {
+AppBar aiAppBar(setState,List<String>ingredientsList,String responseTxt,aiRecipe) {
   return AppBar(
     actions: [
       ElevatedButton(
           style: ButtonStyle(
             backgroundColor: WidgetStatePropertyAll(deepPurple),
           ),
-          onPressed: onPressed,
+          onPressed: () {
+        setState(() {
+        ingredientsList.clear();
+        responseTxt = "";
+        });
+      aiRecipe.value= RecipeModel(
+    name: '',
+    yield: '',
+    prepTime: '',
+    cookTime: '',
+    ingredients: [],
+    instructions: [],
+    tips: [],
+  );
+      },
           child:Text("Clear All",style: TextStyle(color: fontColor),)),
           const Text("   ")
         

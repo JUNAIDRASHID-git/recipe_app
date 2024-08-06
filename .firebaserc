@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "recipe-web-app-188b7",
+    "upload": "recipe-web-app-188b7"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}

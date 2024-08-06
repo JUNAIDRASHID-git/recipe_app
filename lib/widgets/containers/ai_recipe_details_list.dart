@@ -12,7 +12,7 @@ Padding aiRecipeDetails(ValueNotifier<RecipeModel> aiRecipe, context) {
           color: aiContainerColor,
           border: Border.all(color: aiContainerborderColor)),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 30),
+        padding: const EdgeInsets.only(left: 20, top: 30,right: 5),
         child: ValueListenableBuilder<RecipeModel>(
           valueListenable: aiRecipe,
           builder: (context, recipe, child) {

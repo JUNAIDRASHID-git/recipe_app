@@ -11,3 +11,4 @@ Color deleteButtonColor = const Color.fromARGB(255, 151, 36, 36);
 Color deepPurple = Colors.deepPurple;
 Color aiContainerColor = const Color.fromARGB(255, 66, 66, 66);
 Color aiContainerborderColor = const Color.fromARGB(137, 99, 99, 99);
+Color homesideBarBgColor = const Color.fromARGB(255, 98, 98, 98);

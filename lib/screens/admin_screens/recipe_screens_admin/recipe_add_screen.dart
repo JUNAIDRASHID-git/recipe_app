@@ -94,13 +94,6 @@ class _AddRecipeAdminState extends State<AddRecipeAdmin> {
                           setState(() => selectedItem = value!);
                         },
                       ),
-                      dropdownButton(
-                        dishType,
-                        selectedDishType,
-                        (value) {
-                          setState(() => selectedDishType = value!);
-                        },
-                      ),
                     ],
                   ),
                   sizedBox,

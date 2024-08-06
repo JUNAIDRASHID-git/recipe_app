@@ -36,8 +36,8 @@ class _HomeState extends State<Home> {
                 icon: const Icon(Icons.menu)),
           ),
         ),
-        iconTheme: const IconThemeData(
-          color: Colors.white,
+        iconTheme:  IconThemeData(
+          color: fontColor,
           size: 40,
         ),
         backgroundColor: Colors.transparent,
